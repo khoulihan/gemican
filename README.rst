@@ -1,10 +1,11 @@
-Pelican |build-status| |pypi-version| |repology|
-================================================
+Gemican
+=======
 
-Pelican is a static site generator, written in Python_.
+Gemican is a static gemini capsule generator, written in Python_, and based on
+the static site generator Pelican_.
 
 * Write content in reStructuredText_ or Markdown_ using your editor of choice
-* Includes a simple command line tool to (re)generate site files
+* Includes a simple command line tool to (re)generate capsule files
 * Easy to interface with version control systems and web hooks
 * Completely static output is simple to host anywhere
 
@@ -12,7 +13,7 @@ Pelican is a static site generator, written in Python_.
 Features
 --------
 
-Pelican’s feature highlights include:
+Gemican’s feature highlights include:
 
 * Chronological content (e.g., articles, blog posts) as well as static pages
 * Integration with external services
@@ -22,7 +23,6 @@ Pelican’s feature highlights include:
 * Code syntax highlighting via Pygments_
 * Import existing content from WordPress, Dotclear, or RSS feeds
 * Fast rebuild times due to content caching and selective output writing
-* Extensible via a rich plugin ecosystem: `Pelican Plugins`_
 
 Check out `Pelican's documentation`_ for further information.
 
@@ -36,19 +36,21 @@ See our `contribution submission and feedback guidelines <CONTRIBUTING.rst>`_.
 Source code
 -----------
 
-Pelican's source code is `hosted on GitHub`_. If you feel like hacking,
-take a look at `Pelican's internals`_.
+Gemican's source code is `hosted on GitHub`_. If you feel like hacking,
+take a look at `Pelican's internals`_, since Gemican doesn't have its own
+documentation yet and is mostly identical to Pelican.
 
 
-Why the name "Pelican"?
+Why the name "Gemican"?
 -----------------------
 
-"Pelican" is an anagram of *calepin*, which means "notebook" in French.
+"Gemican" is an anagram of *camegin*, which means nothing.
 
 
 .. Links
 
 .. _Python: https://www.python.org/
+.. _Pelican: https://github.com/getpelican/pelican
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _Markdown: https://daringfireball.net/projects/markdown/
 .. _Jinja2: https://palletsprojects.com/p/jinja/
@@ -56,14 +58,4 @@ Why the name "Pelican"?
 .. _`Pelican Plugins`: https://github.com/pelican-plugins
 .. _`Pelican's documentation`: https://docs.getpelican.com/
 .. _`Pelican's internals`: https://docs.getpelican.com/en/latest/internals.html
-.. _`hosted on GitHub`: https://github.com/getpelican/pelican
-
-.. |build-status| image:: https://img.shields.io/github/workflow/status/getpelican/pelican/build
-   :target: https://github.com/getpelican/pelican/actions
-   :alt: GitHub Actions CI: continuous integration status
-.. |pypi-version| image:: https://img.shields.io/pypi/v/pelican.svg
-   :target: https://pypi.org/project/pelican/
-   :alt: PyPI: the Python Package Index
-.. |repology| image:: https://repology.org/badge/tiny-repos/pelican.svg
-   :target: https://repology.org/project/pelican/versions
-   :alt: Repology: the packaging hub
+.. _`hosted on GitHub`: https://github.com/khoulihan/gemican
