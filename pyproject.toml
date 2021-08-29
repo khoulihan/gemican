@@ -1,20 +1,18 @@
 [tool.poetry]
-name = "pelican"
-version = "4.6.0"
-description = "Static site generator supporting Markdown and reStructuredText"
-authors = ["Justin Mayer <entrop@gmail.com>"]
+name = "gemican"
+version = "0.1.0"
+description = "Static gemini capsule generator supporting Markdown and reStructuredText"
+authors = ["Kevin Houlihan <kevin@crimsoncookie.com>"]
 license = "AGPLv3"
 readme = "README.rst"
 keywords = ["static site generator", "static sites", "ssg"]
 
-homepage = "https://getpelican.com"
-repository = "https://github.com/getpelican/pelican"
+repository = "https://github.com/khoulihan/gemican"
 documentation = "https://docs.getpelican.com"
 
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
+    "Development Status :: 2 - Pre-Alpha",
     "Environment :: Console",
-    "Framework :: Pelican",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Internet :: WWW/HTTP :: Dynamic Content :: Content Management System",
@@ -26,8 +24,7 @@ classifiers = [
 ]
 
 [tool.poetry.urls]
-"Funding" = "https://donate.getpelican.com/"
-"Tracker" = "https://github.com/getpelican/pelican/issues"
+"Tracker" = "https://github.com/khoulihan/gemican/issues"
 
 [tool.poetry.dependencies]
 python = "^3.6"

@@ -16,3 +16,4 @@ venv
 samples/output
 *.pem
 poetry.lock
+.python-version
