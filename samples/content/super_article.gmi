@@ -1,0 +1,28 @@
+Title: This is a super article !
+Tags: foo, bar, foobar
+Date: 2010-12-02 10:14
+Modified: 2013-11-17 23:29
+Category: yeah
+Author: Alexis Métaireau
+Summary:
+    Multi-line metadata should be supported
+    as well as **inline markup**.
+
+Some content here !
+
+## This is a simple title
+
+
+And here comes the cool stuff.
+
+=> {static}/pictures/Sushi.jpg alternate text
+=> {static}/pictures/Sushi_Macro.jpg alternate text
+
+``` Code example
+   >>> from ipdb import set_trace
+   >>> set_trace()
+```
+
+→ And now try with some utf8 hell: ééé
+
+=> http://books.couchdb.org/relax/design-documents/views stuff

@@ -10,7 +10,7 @@ RELATIVE_URLS = True
 GITHUB_URL = 'http://github.com/ametaireau/'
 DISQUS_SITENAME = "blog-notmyidea"
 REVERSE_CATEGORY_ORDER = True
-LOCALE = "C"
+LOCALE = "en_US.utf8"
 DEFAULT_PAGINATION = 4
 DEFAULT_DATE = (2012, 3, 2, 14, 1, 1)
 
@@ -43,13 +43,9 @@ STATIC_PATHS = [
     ]
 
 # custom page generated with a jinja2 template
-TEMPLATE_PAGES = {'pages/jinja2_template.html': 'jinja2_template.html'}
-
-# there is no other HTML content
-READERS = {'html': None}
-
-# code blocks with line numbers
-PYGMENTS_RST_OPTIONS = {'linenos': 'table'}
+# TODO: This presents a problem because the template looks the same as a page
+# and the page generator picks it up.
+TEMPLATE_PAGES = {'pages/jinja2_template.gmi': 'jinja2_template.gmi'}
 
 # foobar will not be used, because it's not in caps. All configuration keys
 # have to be in caps

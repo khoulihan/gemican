@@ -1,0 +1,5 @@
+{% extends "index.gmi" %}
+{% block title %}# {{ SITENAME }} - Articles by {{ author }}{% endblock %}
+{% block content_title %}
+## Articles by {{ author }}
+{% endblock %}

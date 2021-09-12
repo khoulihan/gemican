@@ -1,0 +1,10 @@
+
+# A formerly markdown powered article
+Published: 20 avril 2011
+By Alexis MétaireauCategory: cat1
+
+You're mutually oblivious.
+
+=> ../../../../../posts/2010/octobre/15/unbelievable/ a root-relative link to unbelievable
+=> ../../../../../posts/2010/octobre/15/unbelievable/ a file-relative link to unbelievable
+

@@ -1,0 +1,8 @@
+Title: This is an article with multiple authors in list format!
+Date: 2014-02-09 02:20
+Modified: 2014-02-09 02:20
+Authors: - Author, First
+         - Author, Second
+
+The author names are in last,first form to verify that
+they are not just getting split on commas.

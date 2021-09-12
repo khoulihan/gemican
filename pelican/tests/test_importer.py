@@ -401,7 +401,7 @@ class TestBuildHeader(unittest.TestCase):
 
 @unittest.skipUnless(BeautifulSoup, 'Needs BeautifulSoup module')
 @unittest.skipUnless(LXML, 'Needs lxml module')
-class TestWordpressXMLAttachements(unittest.TestCase):
+class TestWordpressXMLAttachments(unittest.TestCase):
     def setUp(self):
         self.old_locale = locale.setlocale(locale.LC_ALL)
         locale.setlocale(locale.LC_ALL, 'C')
@@ -440,7 +440,7 @@ class TestWordpressXMLAttachements(unittest.TestCase):
                           .format(post))
 
     def test_download_attachments(self):
-        real_file = os.path.join(CUR_DIR, 'content/article.rst')
+        real_file = os.path.join(CUR_DIR, 'content/article.gmi')
         good_url = path_to_file_url(real_file)
         bad_url = 'http://localhost:1/not_a_file.txt'
         silent_da = mute()(download_attachments)
@@ -449,5 +449,5 @@ class TestWordpressXMLAttachements(unittest.TestCase):
             self.assertEqual(1, len(locations))
             directory = locations[0]
             self.assertTrue(
-                directory.endswith(posix_join('content', 'article.rst')),
+                directory.endswith(posix_join('content', 'article.gmi')),
                 directory)

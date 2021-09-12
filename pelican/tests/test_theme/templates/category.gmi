@@ -1,0 +1,5 @@
+{% extends "index.gmi" %}
+{% block title %}# {{ SITENAME }} - {{ category }} category{% endblock %}
+{% block content_title %}
+## Articles in the {{ category }} category
+{% endblock %}

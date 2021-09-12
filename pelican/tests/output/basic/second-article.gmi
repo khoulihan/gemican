@@ -1,0 +1,9 @@
+
+# Second articleTranslations:
+=> /second-article-fr.gmi fr
+
+Published: Wed 29 February 2012
+Category: misc
+Tags: foo, bar, baz
+This is some article, in english
+

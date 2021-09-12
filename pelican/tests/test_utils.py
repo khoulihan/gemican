@@ -412,7 +412,7 @@ class TestUtils(LoggedTestCase):
         self.assertTrue(modified['settings'])  # modified, first time
 
         # add a content, add file to theme and check again
-        create_file(os.path.join(content_path, 'article.md'),
+        create_file(os.path.join(content_path, 'article.gmi'),
                     'Title: test\n'
                     'Date: 01-01-2020')
 

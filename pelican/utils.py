@@ -967,3 +967,17 @@ def maybe_pluralize(count, singular, plural):
     if count == 1:
         selection = singular
     return '{} {}'.format(count, selection)
+
+
+def urljoin(base, url, *args, **kwargs):
+    """
+    Wrapper around urllib.parse.urljoin so that gemini protocol base
+    won't be rejected
+    """
+    is_gemini = base.startswith('gemini://')
+    if is_gemini:
+        base = base.replace('gemini://', 'https://')
+    result = urllib.parse.urljoin(base, url, *args, **kwargs)
+    if is_gemini:
+        result = result.replace('https://', 'gemini://')
+    return result

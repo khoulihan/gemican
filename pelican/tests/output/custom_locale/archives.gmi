@@ -1,0 +1,23 @@
+# Alexis' log - Archives
+=> ./tag/oh.gmi Oh Oh Oh
+=> ./override/ Override url/save_as
+=> ./pages/this-is-a-test-page.gmi This is a test page
+=> ./category/yeah.gmi">yeah
+=> ./category/misc.gmi">misc
+=> ./category/cat1.gmi">cat1
+=> ./category/bar.gmi">bar
+
+=> ./posts/2012/novembre/30/filename_metadata-example/ 30 novembre 2012 - FILENAME_METADATA example
+=> ./posts/2012/février/29/second-article/ 29 février 2012 - Second article
+=> ./posts/2011/avril/20/a-formerly-markdown-powered-article/ 20 avril 2011 - A formerly markdown powered article
+=> ./posts/2011/février/17/article-1/ 17 février 2011 - Article 1
+=> ./posts/2011/février/17/article-2/ 17 février 2011 - Article 2
+=> ./posts/2011/février/17/article-3/ 17 février 2011 - Article 3
+=> ./posts/2010/décembre/02/this-is-a-super-article/ 02 décembre 2010 - This is a super article !
+=> ./posts/2010/octobre/20/oh-yeah/ 20 octobre 2010 - Oh yeah !
+=> ./posts/2010/octobre/15/unbelievable/ 15 octobre 2010 - Unbelievable !
+=> ./tag/baz.html 14 mars 2010 - The baz tag
+
+Proudly powered by Gemican, which takes great advantage of Python.
+
+=> https://www.python.org/ Python Powered

@@ -1,0 +1,4 @@
+Title: This is an article with multiple authors!
+Date: 2014-02-09 02:20
+Modified: 2014-02-09 02:20
+Authors: First Author, Second Author

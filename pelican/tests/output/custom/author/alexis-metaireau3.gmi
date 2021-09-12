@@ -1,0 +1,19 @@
+# Alexis' log - Articles by Alexis MétaireauA personal blog.
+=> ../tag/oh.gmi Oh Oh Oh
+=> ../override/ Override url/save_as
+=> ../pages/this-is-a-test-page.gmi This is a test page
+=> ../category/yeah.gmi">yeah
+=> ../category/misc.gmi">misc
+=> ../category/cat1.gmi">cat1
+=> ../category/bar.gmi">bar
+
+## Articles by Alexis Métaireau
+=> ../unbelievable.gmi Unbelievable !
+=> ../tag/baz.html The baz tag
+=> ../author/alexis-metaireau.gmi First page
+=> ../author/alexis-metaireau2.gmi Previous page
+Page 3 / 3
+
+Proudly powered by Gemican, which takes great advantage of Python.
+
+=> https://www.python.org/ Python Powered

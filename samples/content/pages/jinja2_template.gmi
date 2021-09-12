@@ -1,0 +1,6 @@
+{% extends "base.gmi" %}
+{% block content %}
+
+Some text
+
+{% endblock %}

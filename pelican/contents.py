@@ -5,7 +5,7 @@ import logging
 import os
 import re
 from html import unescape
-from urllib.parse import unquote, urljoin, urlparse, urlunparse
+from urllib.parse import unquote, urlparse, urlunparse
 
 import pytz
 
@@ -13,7 +13,7 @@ from pelican.plugins import signals
 from pelican.settings import DEFAULT_CONFIG
 from pelican.utils import (deprecated_attribute, memoized, path_to_url,
                            posixize_path, sanitised_join, set_date_tzinfo,
-                           slugify, truncate_html_words)
+                           slugify, truncate_html_words, urljoin)
 
 # Import these so that they're avalaible when you import from pelican.contents.
 from pelican.urlwrappers import (Author, Category, Tag, URLWrapper)  # NOQA
@@ -334,15 +334,12 @@ class Content:
                         m.group('quote')))
 
     def _get_intrasite_link_regex(self):
+        # TODO: The "quote" group is irrelevant here now...
         intrasite_link_regex = self.settings['INTRASITE_LINK_REGEX']
-        regex = r"""
-            (?P<markup><[^\>]+  # match tag with all url-value attributes
-                (?:href|src|poster|data|cite|formaction|action)\s*=\s*)
-
-            (?P<quote>["\'])      # require value to be quoted
-            (?P<path>{}(?P<value>.*?))  # the url value
-            \2""".format(intrasite_link_regex)
-        return re.compile(regex, re.X)
+        regex = r"(?P<markup>=> )(?P<quote>)(?P<path>{}(?P<value>[\S]*))".format(
+            intrasite_link_regex
+        )
+        return re.compile(regex)
 
     def _update_content(self, content, siteurl):
         """Update the content attribute.

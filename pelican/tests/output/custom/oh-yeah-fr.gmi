@@ -1,0 +1,9 @@
+
+# Trop bien !Translations:
+=> ./oh-yeah.gmi en
+
+Published: Wed 20 October 2010
+By Alexis MétaireauCategory: misc
+
+Et voila du contenu en français
+

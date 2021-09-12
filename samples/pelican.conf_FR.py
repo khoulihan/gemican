@@ -16,7 +16,7 @@ DEFAULT_DATE = (2012, 3, 2, 14, 1, 1)
 DEFAULT_DATE_FORMAT = '%d %B %Y'
 
 ARTICLE_URL = 'posts/{date:%Y}/{date:%B}/{date:%d}/{slug}/'
-ARTICLE_SAVE_AS = ARTICLE_URL + 'index.html'
+ARTICLE_SAVE_AS = ARTICLE_URL + 'index.gmi'
 
 FEED_ALL_RSS = 'feeds/all.rss.xml'
 CATEGORY_FEED_RSS = 'feeds/{slug}.rss.xml'
@@ -47,10 +47,7 @@ STATIC_PATHS = [
     ]
 
 # custom page generated with a jinja2 template
-TEMPLATE_PAGES = {'pages/jinja2_template.html': 'jinja2_template.html'}
-
-# code blocks with line numbers
-PYGMENTS_RST_OPTIONS = {'linenos': 'table'}
+TEMPLATE_PAGES = {'pages/jinja2_template.gmi': 'jinja2_template.gmi'}
 
 # foobar will not be used, because it's not in caps. All configuration keys
 # have to be in caps

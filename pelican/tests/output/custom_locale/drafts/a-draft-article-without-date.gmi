@@ -1,0 +1,8 @@
+
+# A draft article without date
+Published: 02 mars 2012
+By Alexis MétaireauCategory: misc
+
+This is a draft article, it should live under the /drafts/ folder and not be
+listed anywhere else.
+

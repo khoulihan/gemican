@@ -1,0 +1,7 @@
+Title: Second article
+Tags: foo, bar, baz
+Date: 2012-02-29
+Lang: en
+Slug: second-article
+
+This is some article, in english

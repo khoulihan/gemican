@@ -1,0 +1,21 @@
+
+{% block title %}# {{ article.title|striptags }}{% endblock %}
+{% block content %}
+{% import 'translations.gmi' as translations with context %}
+{{ translations.translations_for(article) }}
+Published: {{ article.locale_date }}
+{% if article.modified %}
+Modified: {{ article.locale_modified }}
+{% endif %}
+{% if article.authors %}
+By {% for author in article.authors %}{{ author }}{% if not loop.last %}, {% endif %}{% endfor %}
+{% endif %}
+{% if article.category %}
+Category: {{ article.category }}
+{% endif %}
+{% if article.tags %}
+Tags: {% for tag in article.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}
+{% endif %}
+
+{{ article.content }}
+{% endblock %}

@@ -1,0 +1,6 @@
+Title: This is a test draft page
+Status: draft
+
+The quick brown fox .
+
+This page is a draft.

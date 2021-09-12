@@ -1,12 +1,9 @@
-
-This is a super article !
-#########################
-
-:tags: foo, bar, foobar
-:date: 2010-12-02 10:14
-:category: yeah
-:author: Alexis Métaireau
-:summary:
+Title: This is a super article !
+Tags: foo, bar, foobar
+Date: 2010-12-02 10:14
+Category: yeah
+Author: Alexis Métaireau
+Summary:
     Multi-line metadata should be supported
     as well as **inline markup**.
-:custom_field: http://notmyidea.org
+Custom_field: http://notmyidea.org

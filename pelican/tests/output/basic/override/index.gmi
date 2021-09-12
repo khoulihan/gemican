@@ -1,0 +1,20 @@
+A Gemican Gemlog - Override url/save_as
+=> /tag/oh.gmi Oh Oh Oh
+=> /override/ 👉 Override url/save_as
+=> /pages/this-is-a-test-page.gmi This is a test page
+=> /category/bar.gmi">bar
+=> /category/cat1.gmi">cat1
+=> /category/misc.gmi">misc
+=> /category/yeah.gmi">yeah
+
+# Override url/save_as
+
+
+Test page which overrides save_as and url so that this page will be generated
+at a custom location.
+
+
+
+Proudly powered by Gemican, which takes great advantage of Python.
+
+=> https://www.python.org/ Python Powered

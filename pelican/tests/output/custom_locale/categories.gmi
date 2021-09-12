@@ -1,0 +1,18 @@
+# Alexis' log - Categories
+=> ./tag/oh.gmi Oh Oh Oh
+=> ./override/ Override url/save_as
+=> ./pages/this-is-a-test-page.gmi This is a test page
+=> ./category/yeah.gmi">yeah
+=> ./category/misc.gmi">misc
+=> ./category/cat1.gmi">cat1
+=> ./category/bar.gmi">bar
+
+## Categories on Alexis' log
+=> ./category/bar.gmi bar (1)
+=> ./category/cat1.gmi cat1 (4)
+=> ./category/misc.gmi misc (4)
+=> ./category/yeah.gmi yeah (1)
+
+Proudly powered by Gemican, which takes great advantage of Python.
+
+=> https://www.python.org/ Python Powered

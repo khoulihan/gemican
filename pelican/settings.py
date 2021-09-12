@@ -21,7 +21,7 @@ def load_source(name, path):
 logger = logging.getLogger(__name__)
 
 DEFAULT_THEME = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                             'themes', 'notmyidea')
+                             'themes', 'simple')
 DEFAULT_CONFIG = {
     'PATH': os.curdir,
     'ARTICLE_PATHS': [''],
@@ -44,7 +44,7 @@ DEFAULT_CONFIG = {
     'FEED_MAX_ITEMS': '',
     'RSS_FEED_SUMMARY_ONLY': True,
     'SITEURL': '',
-    'SITENAME': 'A Pelican Blog',
+    'SITENAME': 'A Gemican Gemlog',
     'DISPLAY_PAGES_ON_MENU': True,
     'DISPLAY_CATEGORIES_ON_MENU': True,
     'DOCUTILS_SETTINGS': {},
@@ -58,35 +58,39 @@ DEFAULT_CONFIG = {
     'REVERSE_CATEGORY_ORDER': False,
     'DELETE_OUTPUT_DIRECTORY': False,
     'OUTPUT_RETENTION': [],
-    'INDEX_SAVE_AS': 'index.html',
-    'ARTICLE_URL': '{slug}.html',
-    'ARTICLE_SAVE_AS': '{slug}.html',
+    'INDEX_SAVE_AS': 'index.gmi',
+    'ARTICLE_URL': '{slug}.gmi',
+    'ARTICLE_SAVE_AS': '{slug}.gmi',
     'ARTICLE_ORDER_BY': 'reversed-date',
-    'ARTICLE_LANG_URL': '{slug}-{lang}.html',
-    'ARTICLE_LANG_SAVE_AS': '{slug}-{lang}.html',
-    'DRAFT_URL': 'drafts/{slug}.html',
-    'DRAFT_SAVE_AS': 'drafts/{slug}.html',
-    'DRAFT_LANG_URL': 'drafts/{slug}-{lang}.html',
-    'DRAFT_LANG_SAVE_AS': 'drafts/{slug}-{lang}.html',
-    'PAGE_URL': 'pages/{slug}.html',
-    'PAGE_SAVE_AS': 'pages/{slug}.html',
+    'ARTICLE_LANG_URL': '{slug}-{lang}.gmi',
+    'ARTICLE_LANG_SAVE_AS': '{slug}-{lang}.gmi',
+    'DRAFT_URL': 'drafts/{slug}.gmi',
+    'DRAFT_SAVE_AS': 'drafts/{slug}.gmi',
+    'DRAFT_LANG_URL': 'drafts/{slug}-{lang}.gmi',
+    'DRAFT_LANG_SAVE_AS': 'drafts/{slug}-{lang}.gmi',
+    'PAGE_URL': 'pages/{slug}.gmi',
+    'PAGE_SAVE_AS': 'pages/{slug}.gmi',
     'PAGE_ORDER_BY': 'basename',
-    'PAGE_LANG_URL': 'pages/{slug}-{lang}.html',
-    'PAGE_LANG_SAVE_AS': 'pages/{slug}-{lang}.html',
-    'DRAFT_PAGE_URL': 'drafts/pages/{slug}.html',
-    'DRAFT_PAGE_SAVE_AS': 'drafts/pages/{slug}.html',
-    'DRAFT_PAGE_LANG_URL': 'drafts/pages/{slug}-{lang}.html',
-    'DRAFT_PAGE_LANG_SAVE_AS': 'drafts/pages/{slug}-{lang}.html',
+    'PAGE_LANG_URL': 'pages/{slug}-{lang}.gmi',
+    'PAGE_LANG_SAVE_AS': 'pages/{slug}-{lang}.gmi',
+    'DRAFT_PAGE_URL': 'drafts/pages/{slug}.gmi',
+    'DRAFT_PAGE_SAVE_AS': 'drafts/pages/{slug}.gmi',
+    'DRAFT_PAGE_LANG_URL': 'drafts/pages/{slug}-{lang}.gmi',
+    'DRAFT_PAGE_LANG_SAVE_AS': 'drafts/pages/{slug}-{lang}.gmi',
     'STATIC_URL': '{path}',
     'STATIC_SAVE_AS': '{path}',
     'STATIC_CREATE_LINKS': False,
     'STATIC_CHECK_IF_MODIFIED': False,
-    'CATEGORY_URL': 'category/{slug}.html',
-    'CATEGORY_SAVE_AS': 'category/{slug}.html',
-    'TAG_URL': 'tag/{slug}.html',
-    'TAG_SAVE_AS': 'tag/{slug}.html',
-    'AUTHOR_URL': 'author/{slug}.html',
-    'AUTHOR_SAVE_AS': 'author/{slug}.html',
+    'CATEGORY_URL': 'category/{slug}.gmi',
+    'CATEGORY_SAVE_AS': 'category/{slug}.gmi',
+    'TAG_URL': 'tag/{slug}.gmi',
+    'TAG_SAVE_AS': 'tag/{slug}.gmi',
+    'AUTHOR_URL': 'author/{slug}.gmi',
+    'AUTHOR_SAVE_AS': 'author/{slug}.gmi',
+    'ARCHIVES_SAVE_AS': 'archives.gmi',
+    'AUTHORS_SAVE_AS': 'authors.gmi',
+    'CATEGORIES_SAVE_AS': 'categories.gmi',
+    'TAGS_SAVE_AS': 'tags.gmi',
     'PAGINATION_PATTERNS': [
         (1, '{name}{extension}', '{name}{extension}'),
         (2, '{name}{number}{extension}', '{name}{number}{extension}'),
@@ -108,14 +112,6 @@ DEFAULT_CONFIG = {
     'PELICAN_CLASS': 'pelican.Pelican',
     'DEFAULT_DATE_FORMAT': '%a %d %B %Y',
     'DATE_FORMATS': {},
-    'MARKDOWN': {
-        'extension_configs': {
-            'markdown.extensions.codehilite': {'css_class': 'highlight'},
-            'markdown.extensions.extra': {},
-            'markdown.extensions.meta': {},
-        },
-        'output_format': 'html5',
-    },
     'JINJA_FILTERS': {},
     'JINJA_GLOBALS': {},
     'JINJA_TESTS': {},
@@ -140,9 +136,8 @@ DEFAULT_CONFIG = {
     'SUMMARY_MAX_LENGTH': 50,
     'PLUGIN_PATHS': [],
     'PLUGINS': None,
-    'PYGMENTS_RST_OPTIONS': {},
     'TEMPLATE_PAGES': {},
-    'TEMPLATE_EXTENSIONS': ['.html'],
+    'TEMPLATE_EXTENSIONS': ['.gmi', '.gemini'],
     'IGNORE_FILES': ['.#*'],
     'SLUG_REGEX_SUBSTITUTIONS': [
         (r'[^\w\s-]', ''),  # remove non-alphabetical/whitespace/'-' chars
@@ -162,7 +157,7 @@ DEFAULT_CONFIG = {
     'LOAD_CONTENT_CACHE': False,
     'WRITE_SELECTED': [],
     'FORMATTED_FIELDS': ['summary'],
-    'PORT': 8000,
+    'PORT': 1966,
     'BIND': '127.0.0.1',
 }
 
@@ -201,12 +196,6 @@ def read_settings(path=None, override=None):
     settings = dict(copy.deepcopy(DEFAULT_CONFIG), **settings)
     settings = configure_settings(settings)
 
-    # This is because there doesn't seem to be a way to pass extra
-    # parameters to docutils directive handlers, so we have to have a
-    # variable here that we'll import from within Pygments.run (see
-    # rstdirectives.py) to see what the user defaults were.
-    global PYGMENTS_RST_OPTIONS
-    PYGMENTS_RST_OPTIONS = settings.get('PYGMENTS_RST_OPTIONS', None)
     return settings
 
 
@@ -308,12 +297,6 @@ def handle_deprecated_settings(settings):
         settings['THEME_TEMPLATES_OVERRIDES'] = \
             settings['EXTRA_TEMPLATES_PATHS']
         del settings['EXTRA_TEMPLATES_PATHS']
-
-    # MD_EXTENSIONS -> MARKDOWN
-    if 'MD_EXTENSIONS' in settings:
-        logger.warning('MD_EXTENSIONS is deprecated use MARKDOWN '
-                       'instead. Falling back to the default.')
-        settings['MARKDOWN'] = DEFAULT_CONFIG['MARKDOWN']
 
     # LESS_GENERATOR -> Webassets plugin
     # FILES_TO_COPY -> STATIC_PATHS, EXTRA_PATH_METADATA

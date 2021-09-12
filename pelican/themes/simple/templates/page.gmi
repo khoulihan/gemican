@@ -1,0 +1,11 @@
+{% extends "base.gmi" %}
+{% block title %}{{ SITENAME }} - {{ page.title|striptags }}{%endblock%}
+{% block content %}
+# {{ page.title }}
+{% import 'translations.gmi' as translations with context %}
+{{ translations.translations_for(page) }}
+
+{{ page.content }}
+
+{% if page.modified %}Last updated: {{ page.locale_modified }}{% endif %}
+{% endblock %}

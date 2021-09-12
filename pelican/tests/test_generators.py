@@ -30,15 +30,15 @@ class TestGenerator(unittest.TestCase):
         locale.setlocale(locale.LC_ALL, self.old_locale)
 
     def test_include_path(self):
-        self.settings['IGNORE_FILES'] = {'ignored1.rst', 'ignored2.rst'}
+        self.settings['IGNORE_FILES'] = {'ignored1.gmi', 'ignored2.gmi'}
 
-        filename = os.path.join(CUR_DIR, 'content', 'article.rst')
+        filename = os.path.join(CUR_DIR, 'content', 'article.gmi')
         include_path = self.generator._include_path
         self.assertTrue(include_path(filename))
-        self.assertTrue(include_path(filename, extensions=('rst',)))
+        self.assertTrue(include_path(filename, extensions=('gmi',)))
         self.assertFalse(include_path(filename, extensions=('md',)))
 
-        ignored_file = os.path.join(CUR_DIR, 'content', 'ignored1.rst')
+        ignored_file = os.path.join(CUR_DIR, 'content', 'ignored1.gmi')
         self.assertFalse(include_path(ignored_file))
 
     def test_get_files_exclude(self):
@@ -53,7 +53,7 @@ class TestGenerator(unittest.TestCase):
 
         filepaths = generator.get_files(paths=['maindir'])
         found_files = {os.path.basename(f) for f in filepaths}
-        expected_files = {'maindir.md', 'subdir.md'}
+        expected_files = {'maindir.gmi', 'subdir.gmi'}
         self.assertFalse(
             expected_files - found_files,
             "get_files() failed to find one or more files")
@@ -61,7 +61,7 @@ class TestGenerator(unittest.TestCase):
         # Test string as `paths` argument rather than list
         filepaths = generator.get_files(paths='maindir')
         found_files = {os.path.basename(f) for f in filepaths}
-        expected_files = {'maindir.md', 'subdir.md'}
+        expected_files = {'maindir.gmi', 'subdir.gmi'}
         self.assertFalse(
             expected_files - found_files,
             "get_files() failed to find one or more files")
@@ -69,10 +69,10 @@ class TestGenerator(unittest.TestCase):
         filepaths = generator.get_files(paths=[''], exclude=['maindir'])
         found_files = {os.path.basename(f) for f in filepaths}
         self.assertNotIn(
-            'maindir.md', found_files,
+            'maindir.gmi', found_files,
             "get_files() failed to exclude a top-level directory")
         self.assertNotIn(
-            'subdir.md', found_files,
+            'subdir.gmi', found_files,
             "get_files() failed to exclude a subdir of an excluded directory")
 
         filepaths = generator.get_files(
@@ -80,13 +80,13 @@ class TestGenerator(unittest.TestCase):
             exclude=[os.path.join('maindir', 'subdir')])
         found_files = {os.path.basename(f) for f in filepaths}
         self.assertNotIn(
-            'subdir.md', found_files,
+            'subdir.gmi', found_files,
             "get_files() failed to exclude a subdirectory")
 
         filepaths = generator.get_files(paths=[''], exclude=['subdir'])
         found_files = {os.path.basename(f) for f in filepaths}
         self.assertIn(
-            'subdir.md', found_files,
+            'subdir.gmi', found_files,
             "get_files() excluded a subdirectory by name, ignoring its path")
 
     def test_custom_jinja_environment(self):
@@ -125,18 +125,20 @@ class TestGenerator(unittest.TestCase):
 
         filename = generator.get_template('article').filename
         self.assertEqual(override_dirs[0], os.path.dirname(filename))
-        self.assertEqual('article.html', os.path.basename(filename))
+        self.assertEqual('article.gmi', os.path.basename(filename))
 
         filename = generator.get_template('authors').filename
         self.assertEqual(override_dirs[1], os.path.dirname(filename))
-        self.assertEqual('authors.html', os.path.basename(filename))
+        self.assertEqual('authors.gmi', os.path.basename(filename))
 
-        filename = generator.get_template('taglist').filename
+        filename = generator.get_template('pagination').filename
         self.assertEqual(os.path.join(self.settings['THEME'], 'templates'),
                          os.path.dirname(filename))
         self.assertNotIn(os.path.dirname(filename), override_dirs)
-        self.assertEqual('taglist.html', os.path.basename(filename))
+        self.assertEqual('pagination.gmi', os.path.basename(filename))
 
+    # TODO: I think the lack of a second theme is an issue for this test
+    # "simple" is supposed to be a non-default theme.
     def test_simple_prefix(self):
         """
             Test `!simple` theme prefix.
@@ -145,7 +147,7 @@ class TestGenerator(unittest.TestCase):
         expected_path = os.path.join(
             os.path.dirname(CUR_DIR), 'themes', 'simple', 'templates')
         self.assertEqual(expected_path, os.path.dirname(filename))
-        self.assertEqual('authors.html', os.path.basename(filename))
+        self.assertEqual('authors.gmi', os.path.basename(filename))
 
     def test_theme_prefix(self):
         """
@@ -153,9 +155,9 @@ class TestGenerator(unittest.TestCase):
         """
         filename = self.generator.get_template('!theme/authors').filename
         expected_path = os.path.join(
-            os.path.dirname(CUR_DIR), 'themes', 'notmyidea', 'templates')
+            os.path.dirname(CUR_DIR), 'themes', 'simple', 'templates')
         self.assertEqual(expected_path, os.path.dirname(filename))
-        self.assertEqual('authors.html', os.path.basename(filename))
+        self.assertEqual('authors.gmi', os.path.basename(filename))
 
     def test_bad_prefix(self):
         """
@@ -239,10 +241,7 @@ class TestArticlesGenerator(unittest.TestCase):
             ['Article with markdown containing footnotes', 'published',
              'Default', 'article'],
             ['Article with template', 'published', 'Default', 'custom'],
-            ['Metadata tags as list!', 'published', 'Default', 'article'],
-            ['Rst with filename metadata', 'published', 'yeah', 'article'],
-            ['One -, two --, three --- dashes!', 'published', 'Default',
-             'article'],
+            ['Gemtext with filename metadata', 'published', 'yeah', 'article'],
             ['One -, two --, three --- dashes!', 'published', 'Default',
              'article'],
             ['Test Markdown extensions', 'published', 'Default', 'article'],
@@ -252,23 +251,10 @@ class TestArticlesGenerator(unittest.TestCase):
             ['Test metadata duplicates', 'published', 'test', 'article'],
             ['Test mkd File', 'published', 'test', 'article'],
             ['This is a super article !', 'published', 'Yeah', 'article'],
-            ['This is a super article !', 'published', 'Yeah', 'article'],
-            ['Article with Nonconformant HTML meta tags', 'published',
-                'Default', 'article'],
             ['This is a super article !', 'published', 'yeah', 'article'],
             ['This is a super article !', 'published', 'yeah', 'article'],
-            ['This is a super article !', 'published', 'yeah', 'article'],
-            ['This is a super article !', 'published', 'yeah', 'article'],
-            ['This is a super article !', 'published', 'yeah', 'article'],
-            ['This is a super article !', 'published', 'yeah', 'article'],
-            ['This is a super article !', 'published', 'yeah', 'article'],
-            ['This is a super article !', 'published', 'yeah', 'article'],
-            ['This is a super article !', 'published', 'Default', 'article'],
-            ['Article with an inline SVG', 'published', 'Default', 'article'],
             ['This is an article with category !', 'published', 'yeah',
              'article'],
-            ['This is an article with multiple authors!', 'published',
-                'Default', 'article'],
             ['This is an article with multiple authors!', 'published',
                 'Default', 'article'],
             ['This is an article with multiple authors in list format!',
@@ -352,18 +338,18 @@ class TestArticlesGenerator(unittest.TestCase):
             path=None, theme=settings['THEME'], output_path=None)
         write = MagicMock()
         generator.generate_direct_templates(write)
-        write.assert_called_with("archives.html",
+        write.assert_called_with("archives.gmi",
                                  generator.get_template("archives"), context,
                                  articles=generator.articles,
                                  dates=generator.dates, blog=True,
                                  template_name='archives',
-                                 page_name='archives', url="archives.html")
+                                 page_name='archives', url="archives.gmi")
 
     def test_direct_templates_save_as_url_modified(self):
 
         settings = get_settings()
         settings['DIRECT_TEMPLATES'] = ['archives']
-        settings['ARCHIVES_SAVE_AS'] = 'archives/index.html'
+        settings['ARCHIVES_SAVE_AS'] = 'archives/index.gmi'
         settings['ARCHIVES_URL'] = 'archives/'
         settings['CACHE_PATH'] = self.temp_cache
         generator = ArticlesGenerator(
@@ -371,7 +357,7 @@ class TestArticlesGenerator(unittest.TestCase):
             path=None, theme=settings['THEME'], output_path=None)
         write = MagicMock()
         generator.generate_direct_templates(write)
-        write.assert_called_with("archives/index.html",
+        write.assert_called_with("archives/index.gmi",
                                  generator.get_template("archives"), settings,
                                  articles=generator.articles,
                                  dates=generator.dates, blog=True,
@@ -412,7 +398,7 @@ class TestArticlesGenerator(unittest.TestCase):
         locale.setlocale(locale.LC_ALL, 'C')
         settings = get_settings()
 
-        settings['YEAR_ARCHIVE_SAVE_AS'] = 'posts/{date:%Y}/index.html'
+        settings['YEAR_ARCHIVE_SAVE_AS'] = 'posts/{date:%Y}/index.gmi'
         settings['YEAR_ARCHIVE_URL'] = 'posts/{date:%Y}/'
         settings['CACHE_PATH'] = self.temp_cache
         context = get_context(settings)
@@ -428,7 +414,7 @@ class TestArticlesGenerator(unittest.TestCase):
         # among other things it must have at least been called with this
         context["period"] = (1970,)
         context["period_num"] = (1970,)
-        write.assert_called_with("posts/1970/index.html",
+        write.assert_called_with("posts/1970/index.gmi",
                                  generator.get_template("period_archives"),
                                  context, blog=True, articles=articles,
                                  dates=dates, template_name='period_archives',
@@ -436,7 +422,7 @@ class TestArticlesGenerator(unittest.TestCase):
                                  all_articles=generator.articles)
 
         settings['MONTH_ARCHIVE_SAVE_AS'] = \
-            'posts/{date:%Y}/{date:%b}/index.html'
+            'posts/{date:%Y}/{date:%b}/index.gmi'
         settings['MONTH_ARCHIVE_URL'] = \
             'posts/{date:%Y}/{date:%b}/'
         context = get_context(settings)
@@ -454,7 +440,7 @@ class TestArticlesGenerator(unittest.TestCase):
         context["period"] = (1970, "January")
         context["period_num"] = (1970, 1)
         # among other things it must have at least been called with this
-        write.assert_called_with("posts/1970/Jan/index.html",
+        write.assert_called_with("posts/1970/Jan/index.gmi",
                                  generator.get_template("period_archives"),
                                  context, blog=True, articles=articles,
                                  dates=dates, template_name='period_archives',
@@ -462,7 +448,7 @@ class TestArticlesGenerator(unittest.TestCase):
                                  all_articles=generator.articles)
 
         settings['DAY_ARCHIVE_SAVE_AS'] = \
-            'posts/{date:%Y}/{date:%b}/{date:%d}/index.html'
+            'posts/{date:%Y}/{date:%b}/{date:%d}/index.gmi'
         settings['DAY_ARCHIVE_URL'] = \
             'posts/{date:%Y}/{date:%b}/{date:%d}/'
         context = get_context(settings)
@@ -488,7 +474,7 @@ class TestArticlesGenerator(unittest.TestCase):
         context["period"] = (1970, "January", 1)
         context["period_num"] = (1970, 1, 1)
         # among other things it must have at least been called with this
-        write.assert_called_with("posts/1970/Jan/01/index.html",
+        write.assert_called_with("posts/1970/Jan/01/index.gmi",
                                  generator.get_template("period_archives"),
                                  context, blog=True, articles=articles,
                                  dates=dates, template_name='period_archives',
@@ -567,17 +553,13 @@ class TestArticlesGenerator(unittest.TestCase):
         expected = [
             'An Article With Code Block To Test Typogrify Ignore',
             'Article title',
-            'Article with Nonconformant HTML meta tags',
-            'Article with an inline SVG',
             'Article with markdown and nested summary metadata',
             'Article with markdown and summary metadata multi',
             'Article with markdown and summary metadata single',
             'Article with markdown containing footnotes',
             'Article with template',
-            'Metadata tags as list!',
+            'Gemtext with filename metadata',
             'One -, two --, three --- dashes!',
-            'One -, two --, three --- dashes!',
-            'Rst with filename metadata',
             'Test Markdown extensions',
             'Test markdown File',
             'Test md File',
@@ -587,19 +569,10 @@ class TestArticlesGenerator(unittest.TestCase):
             'This is a super article !',
             'This is a super article !',
             'This is a super article !',
-            'This is a super article !',
-            'This is a super article !',
-            'This is a super article !',
-            'This is a super article !',
-            'This is a super article !',
-            'This is a super article !',
-            'This is a super article !',
-            'This is a super article !',
             'This is an article with category !',
             ('This is an article with multiple authors in lastname, '
              'firstname format!'),
             'This is an article with multiple authors in list format!',
-            'This is an article with multiple authors!',
             'This is an article with multiple authors!',
             'This is an article without category !',
             'This is an article without category !',
@@ -769,8 +742,8 @@ class TestPageGenerator(unittest.TestCase):
         pages_by_title = {p.title: p for p in generator.pages}
 
         test_content = pages_by_title['Page with a bunch of links'].content
-        self.assertIn('<a href="/category/yeah.html">', test_content)
-        self.assertIn('<a href="/tag/matsuku.html">', test_content)
+        self.assertIn('=> /category/yeah.gmi', test_content)
+        self.assertIn('=> /tag/matsuku.gmi', test_content)
 
     def test_static_and_attach_links_on_generated_pages(self):
         """
@@ -778,7 +751,7 @@ class TestPageGenerator(unittest.TestCase):
         are included in context['static_links']
         """
         settings = get_settings()
-        settings['PAGE_PATHS'] = ['TestPages/page_with_static_links.md']
+        settings['PAGE_PATHS'] = ['TestPages/page_with_static_links.gmi']
         settings['CACHE_PATH'] = self.temp_cache
         settings['DEFAULT_DATE'] = (1970, 1, 1)
         context = get_context(settings)
@@ -814,7 +787,7 @@ class TestTemplatePagesGenerator(unittest.TestCase):
         settings = get_settings()
         settings['STATIC_PATHS'] = ['static']
         settings['TEMPLATE_PAGES'] = {
-            'template/source.html': 'generated/file.html'
+            'template/source.gmi': 'generated/file.gmi'
         }
 
         generator = TemplatePagesGenerator(
@@ -823,7 +796,7 @@ class TestTemplatePagesGenerator(unittest.TestCase):
 
         # create a dummy template file
         template_dir = os.path.join(self.temp_content, 'template')
-        template_path = os.path.join(template_dir, 'source.html')
+        template_path = os.path.join(template_dir, 'source.gmi')
         os.makedirs(template_dir)
         with open(template_path, 'w') as template_file:
             template_file.write(self.TEMPLATE_CONTENT)
@@ -831,7 +804,7 @@ class TestTemplatePagesGenerator(unittest.TestCase):
         writer = Writer(self.temp_output, settings=settings)
         generator.generate_output(writer)
 
-        output_path = os.path.join(self.temp_output, 'generated', 'file.html')
+        output_path = os.path.join(self.temp_output, 'generated', 'file.gmi')
 
         # output file has been generated
         self.assertTrue(os.path.exists(output_path))
@@ -845,6 +818,7 @@ class TestStaticGenerator(unittest.TestCase):
 
     def setUp(self):
         self.content_path = os.path.join(CUR_DIR, 'mixed_content')
+        self.test_theme = os.path.join(CUR_DIR, 'test_theme')
         self.temp_content = mkdtemp(prefix='testcontent.')
         self.temp_output = mkdtemp(prefix='testoutput.')
         self.settings = get_settings()
@@ -873,7 +847,10 @@ class TestStaticGenerator(unittest.TestCase):
     def test_theme_static_paths_dirs(self):
         """Test that StaticGenerator properly copies also files mentioned in
            TEMPLATE_STATIC_PATHS, not just directories."""
-        settings = get_settings(PATH=self.content_path)
+        settings = get_settings(
+            PATH=self.content_path,
+            THEME=self.test_theme,
+        )
         context = get_context(settings, staticfiles=[])
 
         StaticGenerator(
@@ -884,16 +861,16 @@ class TestStaticGenerator(unittest.TestCase):
         # The content of dirs listed in THEME_STATIC_PATHS (defaulting to
         # "static") is put into the output
         self.assertTrue(os.path.isdir(os.path.join(self.temp_output,
-                                                   "theme/css/")))
-        self.assertTrue(os.path.isdir(os.path.join(self.temp_output,
-                                                   "theme/fonts/")))
+                                                   "theme/images/")))
 
     def test_theme_static_paths_files(self):
         """Test that StaticGenerator properly copies also files mentioned in
            TEMPLATE_STATIC_PATHS, not just directories."""
         settings = get_settings(
             PATH=self.content_path,
-            THEME_STATIC_PATHS=['static/css/fonts.css', 'static/fonts/'],)
+            THEME=self.test_theme,
+            THEME_STATIC_PATHS=['static/images/common_image.jpg', 'static/files/'],
+        )
         context = get_context(settings, staticfiles=[])
 
         StaticGenerator(
@@ -904,24 +881,18 @@ class TestStaticGenerator(unittest.TestCase):
         # Only the content of dirs and files listed in THEME_STATIC_PATHS are
         # put into the output, not everything from static/
         self.assertFalse(os.path.isdir(os.path.join(self.temp_output,
-                                                    "theme/css/")))
+                                                    "theme/images/")))
         self.assertFalse(os.path.isdir(os.path.join(self.temp_output,
-                                                    "theme/fonts/")))
+                                                    "theme/files/")))
 
         self.assertTrue(os.path.isfile(os.path.join(
-            self.temp_output, "theme/Yanone_Kaffeesatz_400.eot")))
+            self.temp_output, "theme/common_image.jpg")))
+        self.assertFalse(os.path.isfile(os.path.join(
+            self.temp_output, "theme/logo.png")))
         self.assertTrue(os.path.isfile(os.path.join(
-            self.temp_output, "theme/Yanone_Kaffeesatz_400.svg")))
+            self.temp_output, "theme/one.txt")))
         self.assertTrue(os.path.isfile(os.path.join(
-            self.temp_output, "theme/Yanone_Kaffeesatz_400.ttf")))
-        self.assertTrue(os.path.isfile(os.path.join(
-            self.temp_output, "theme/Yanone_Kaffeesatz_400.woff")))
-        self.assertTrue(os.path.isfile(os.path.join(
-            self.temp_output, "theme/Yanone_Kaffeesatz_400.woff2")))
-        self.assertTrue(os.path.isfile(os.path.join(self.temp_output,
-                                                    "theme/font.css")))
-        self.assertTrue(os.path.isfile(os.path.join(self.temp_output,
-                                                    "theme/fonts.css")))
+            self.temp_output, "theme/two.txt")))
 
     def test_static_excludes(self):
         """Test that StaticGenerator respects STATIC_EXCLUDES.
@@ -969,8 +940,8 @@ class TestStaticGenerator(unittest.TestCase):
                        for c in context['staticfiles']]
 
         self.assertFalse(
-            any(name.endswith(".md") for name in staticnames),
-            "STATIC_EXCLUDE_SOURCES=True failed to exclude a markdown file")
+            any(name.endswith(".gmi") for name in staticnames),
+            "STATIC_EXCLUDE_SOURCES=True failed to exclude a gemtext file")
 
         settings.update(STATIC_EXCLUDE_SOURCES=False)
         context = get_context(settings)
@@ -985,8 +956,8 @@ class TestStaticGenerator(unittest.TestCase):
                        for c in context['staticfiles']]
 
         self.assertTrue(
-            any(name.endswith(".md") for name in staticnames),
-            "STATIC_EXCLUDE_SOURCES=False failed to include a markdown file")
+            any(name.endswith(".gmi") for name in staticnames),
+            "STATIC_EXCLUDE_SOURCES=False failed to include a gemtext file")
 
     def test_static_links(self):
         """Test that StaticGenerator uses files in static_links

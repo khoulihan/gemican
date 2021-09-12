@@ -1,0 +1,20 @@
+Alexis' log - This is a test hidden page
+=> ../tag/oh.gmi Oh Oh Oh
+=> ../override/ Override url/save_as
+=> ../pages/this-is-a-test-page.gmi This is a test page
+=> ../category/yeah.gmi">yeah
+=> ../category/misc.gmi">misc
+=> ../category/cat1.gmi">cat1
+=> ../category/bar.gmi">bar
+
+# This is a test hidden page
+
+
+This is great for things like error(404) pages
+Anyone can see this page but it's not linked to anywhere!
+
+
+
+Proudly powered by Gemican, which takes great advantage of Python.
+
+=> https://www.python.org/ Python Powered

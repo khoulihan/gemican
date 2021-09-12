@@ -1,0 +1,19 @@
+A Gemican Gemlog - Oh Oh Oh
+=> /tag/oh.gmi 👉 Oh Oh Oh
+=> /override/ Override url/save_as
+=> /pages/this-is-a-test-page.gmi This is a test page
+=> /category/bar.gmi">bar
+=> /category/cat1.gmi">cat1
+=> /category/misc.gmi">misc
+=> /category/yeah.gmi">yeah
+
+# Oh Oh Oh
+
+
+This page overrides the listening of the articles under the *oh* tag.
+
+
+
+Proudly powered by Gemican, which takes great advantage of Python.
+
+=> https://www.python.org/ Python Powered

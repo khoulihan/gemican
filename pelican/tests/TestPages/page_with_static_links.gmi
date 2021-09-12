@@ -1,0 +1,7 @@
+Title: Page with static links
+
+My links:
+
+=> {static}image0.jpg Link 0
+
+=> {attach}image1.jpg Link 1

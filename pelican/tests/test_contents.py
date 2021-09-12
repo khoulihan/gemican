@@ -192,12 +192,12 @@ class TestPage(TestBase):
 
         # if a title is defined, save_as should be set
         page = Page(**self.page_kwargs)
-        self.assertEqual(page.save_as, "pages/foo-bar.html")
+        self.assertEqual(page.save_as, "pages/foo-bar.gmi")
 
         # if a language is defined, save_as should include it accordingly
         self.page_kwargs['metadata'].update({'lang': 'fr', })
         page = Page(**self.page_kwargs)
-        self.assertEqual(page.save_as, "pages/foo-bar-fr.html")
+        self.assertEqual(page.save_as, "pages/foo-bar-fr.gmi")
 
     def test_relative_source_path(self):
         # 'relative_source_path' should be the relative path
@@ -306,99 +306,99 @@ class TestPage(TestBase):
         args['settings'] = settings
 
         # Tag
-        args['content'] = ('A simple test, with a '
-                           '<a href="|tag|tagname">link</a>')
+        args['content'] = ('A simple test, with a link\n'
+                           '=> |tag|tagname link')
         page = Page(**args)
         content = page.get_content('http://notmyidea.org')
         self.assertEqual(
             content,
-            ('A simple test, with a '
-             '<a href="http://notmyidea.org/tag/tagname.html">link</a>'))
+            ('A simple test, with a link\n'
+             '=> http://notmyidea.org/tag/tagname.gmi link'))
 
         # Category
-        args['content'] = ('A simple test, with a '
-                           '<a href="|category|category">link</a>')
+        args['content'] = ('A simple test, with a link\n'
+                           '=> |category|category link')
         page = Page(**args)
         content = page.get_content('http://notmyidea.org')
         self.assertEqual(
             content,
-            ('A simple test, with a '
-             '<a href="http://notmyidea.org/category/category.html">link</a>'))
+            ('A simple test, with a link\n'
+             '=> http://notmyidea.org/category/category.gmi link'))
 
     def test_intrasite_link(self):
         cls_name = '_DummyArticle'
-        article = type(cls_name, (object,), {'url': 'article.html'})
+        article = type(cls_name, (object,), {'url': 'article.gmi'})
 
         args = self.page_kwargs.copy()
         args['settings'] = get_settings()
         args['source_path'] = 'content'
-        args['context']['generated_content'] = {'article.rst': article}
+        args['context']['generated_content'] = {'article.gmi': article}
 
         # Classic intrasite link via filename
         args['content'] = (
-            'A simple test, with a '
-            '<a href="|filename|article.rst">link</a>'
+            'A simple test, with a link\n'
+            '=> |filename|article.gmi link'
         )
-        content = Page(**args).get_content('http://notmyidea.org')
+        content = Page(**args).get_content('gemini://notmyidea.org')
         self.assertEqual(
             content,
-            'A simple test, with a '
-            '<a href="http://notmyidea.org/article.html">link</a>'
+            'A simple test, with a link\n'
+            '=> gemini://notmyidea.org/article.gmi link'
         )
 
         # fragment
         args['content'] = (
-            'A simple test, with a '
-            '<a href="|filename|article.rst#section-2">link</a>'
+            'A simple test, with a link\n'
+            '=> |filename|article.gmi#section-2 link'
         )
-        content = Page(**args).get_content('http://notmyidea.org')
+        content = Page(**args).get_content('gemini://notmyidea.org')
         self.assertEqual(
             content,
-            'A simple test, with a '
-            '<a href="http://notmyidea.org/article.html#section-2">link</a>'
+            'A simple test, with a link\n'
+            '=> gemini://notmyidea.org/article.gmi#section-2 link'
         )
 
         # query
         args['content'] = (
-            'A simple test, with a '
-            '<a href="|filename|article.rst'
-            '?utm_whatever=234&highlight=word">link</a>'
+            'A simple test, with a link\n'
+            '=> |filename|article.gmi'
+            '?utm_whatever=234&highlight=word link'
         )
-        content = Page(**args).get_content('http://notmyidea.org')
+        content = Page(**args).get_content('gemini://notmyidea.org')
         self.assertEqual(
             content,
-            'A simple test, with a '
-            '<a href="http://notmyidea.org/article.html'
-            '?utm_whatever=234&highlight=word">link</a>'
+            'A simple test, with a link\n'
+            '=> gemini://notmyidea.org/article.gmi'
+            '?utm_whatever=234&highlight=word link'
         )
 
         # combination
         args['content'] = (
-            'A simple test, with a '
-            '<a href="|filename|article.rst'
-            '?utm_whatever=234&highlight=word#section-2">link</a>'
+            'A simple test, with a link\n'
+            '=> |filename|article.gmi'
+            '?utm_whatever=234&highlight=word#section-2 link'
         )
-        content = Page(**args).get_content('http://notmyidea.org')
+        content = Page(**args).get_content('gemini://notmyidea.org')
         self.assertEqual(
             content,
-            'A simple test, with a '
-            '<a href="http://notmyidea.org/article.html'
-            '?utm_whatever=234&highlight=word#section-2">link</a>'
+            'A simple test, with a link\n'
+            '=> gemini://notmyidea.org/article.gmi'
+            '?utm_whatever=234&highlight=word#section-2 link'
         )
 
         # also test for summary in metadata
         parsed = (
-            'A simple summary test, with a '
-            '<a href="|filename|article.rst">link</a>'
+            'A simple summary test, with a link\n'
+            '=> |filename|article.gmi link'
         )
         linked = (
-            'A simple summary test, with a '
-            '<a href="http://notmyidea.org/article.html">link</a>'
+            'A simple summary test, with a link\n'
+            '=> gemini://notmyidea.org/article.gmi link'
         )
         args['settings']['FORMATTED_FIELDS'] = ['summary', 'custom']
         args['metadata']['summary'] = parsed
         args['metadata']['custom'] = parsed
-        args['context']['localsiteurl'] = 'http://notmyidea.org'
+        args['context']['localsiteurl'] = 'gemini://notmyidea.org'
         p = Page(**args)
         # This is called implicitly from all generators and Pelican.run() once
         # all files are processed. Here we process just one page so it needs
@@ -422,55 +422,34 @@ class TestPage(TestBase):
                 type(cls_name, (object,), {'url': 'images/graph.svg'}),
         }
         args['context']['generated_content'] = {
-            'reference.rst':
-                type(cls_name, (object,), {'url': 'reference.html'}),
+            'reference.gmi':
+                type(cls_name, (object,), {'url': 'reference.gmi'}),
         }
 
         # video.poster
         args['content'] = (
-            'There is a video with poster '
-            '<video controls poster="{static}/images/poster.jpg">'
-            '<source src="|static|/assets/video.mp4" type="video/mp4">'
-            '</video>'
+            'There is a video with poster\n'
+            '=> {static}/images/poster.jpg Poster\n'
+            '=> |static|/assets/video.mp4\n'
         )
         content = Page(**args).get_content('http://notmyidea.org')
         self.assertEqual(
             content,
-            'There is a video with poster '
-            '<video controls poster="http://notmyidea.org/images/poster.jpg">'
-            '<source src="http://notmyidea.org/assets/video.mp4"'
-            ' type="video/mp4">'
-            '</video>'
+            'There is a video with poster\n'
+            '=> http://notmyidea.org/images/poster.jpg Poster\n'
+            '=> http://notmyidea.org/assets/video.mp4\n'
         )
 
         # object.data
         args['content'] = (
-            'There is a svg object '
-            '<object data="{static}/images/graph.svg"'
-            ' type="image/svg+xml">'
-            '</object>'
+            'There is a svg object\n'
+            '=> {static}/images/graph.svg\n'
         )
         content = Page(**args).get_content('http://notmyidea.org')
         self.assertEqual(
             content,
-            'There is a svg object '
-            '<object data="http://notmyidea.org/images/graph.svg"'
-            ' type="image/svg+xml">'
-            '</object>'
-        )
-
-        # blockquote.cite
-        args['content'] = (
-            'There is a blockquote with cite attribute '
-            '<blockquote cite="{filename}reference.rst">blah blah</blockquote>'
-        )
-        content = Page(**args).get_content('http://notmyidea.org')
-        self.assertEqual(
-            content,
-            'There is a blockquote with cite attribute '
-            '<blockquote cite="http://notmyidea.org/reference.html">'
-            'blah blah'
-            '</blockquote>'
+            'There is a svg object\n'
+            '=> http://notmyidea.org/images/graph.svg\n'
         )
 
     def test_intrasite_link_absolute(self):
@@ -478,8 +457,8 @@ class TestPage(TestBase):
 
         args = self.page_kwargs.copy()
         args['settings'] = get_settings(
-            STATIC_URL='http://static.cool.site/{path}',
-            ARTICLE_URL='http://blog.cool.site/{slug}.html')
+            STATIC_URL='gemini://static.cool.site/{path}',
+            ARTICLE_URL='gemini://blog.cool.site/{slug}.gmi')
         args['source_path'] = 'content'
         args['context']['static_content'] = {
             'images/poster.jpg':
@@ -487,114 +466,118 @@ class TestPage(TestBase):
                        source_path='images/poster.jpg'),
         }
         args['context']['generated_content'] = {
-            'article.rst':
+            'article.gmi':
                 Article('', settings=args['settings'], metadata={
                     'slug': 'article', 'title': 'Article'})
         }
 
         # Article link will go to blog
         args['content'] = (
-            '<a href="{filename}article.rst">Article</a>'
+            '=> {filename}article.gmi Article'
         )
-        content = Page(**args).get_content('http://cool.site')
+        content = Page(**args).get_content('gemini://cool.site')
         self.assertEqual(
             content,
-            '<a href="http://blog.cool.site/article.html">Article</a>'
+            '=> gemini://blog.cool.site/article.gmi Article'
         )
 
         # Page link will go to the main site
         args['content'] = (
-            '<a href="{index}">Index</a>'
+            '=> {index} Index'
         )
-        content = Page(**args).get_content('http://cool.site')
+        content = Page(**args).get_content('gemini://cool.site')
         self.assertEqual(
             content,
-            '<a href="http://cool.site/index.html">Index</a>'
+            '=> gemini://cool.site/index.gmi Index'
         )
 
         # Image link will go to static
         args['content'] = (
-            '<img src="{static}/images/poster.jpg"/>'
+            '=> {static}/images/poster.jpg'
         )
-        content = Page(**args).get_content('http://cool.site')
+        content = Page(**args).get_content('gemini://cool.site')
         self.assertEqual(
             content,
-            '<img src="http://static.cool.site/images/poster.jpg"/>'
+            '=> gemini://static.cool.site/images/poster.jpg'
         )
 
     def test_intrasite_link_escape(self):
         article = type(
-            '_DummyArticle', (object,), {'url': 'article-spaces.html'})
+            '_DummyArticle', (object,), {'url': 'article-spaces.gmi'})
         asset = type(
             '_DummyAsset', (object,), {'url': 'name@example.com'})
 
         args = self.page_kwargs.copy()
         args['settings'] = get_settings()
         args['source_path'] = 'content'
-        args['context']['generated_content'] = {'article spaces.rst': article}
+        args['context']['generated_content'] = {'article spaces.gmi': article}
         args['context']['static_content'] = {'name@example.com': asset}
 
         expected_output = (
-            'A simple test with a '
-            '<a href="http://notmyidea.org/article-spaces.html#anchor">link</a> '
-            '<a href="http://notmyidea.org/name@example.com#anchor">file</a>'
+            'A simple test with a\n'
+            '=> gemini://notmyidea.org/article-spaces.gmi#anchor link\n'
+            '=> gemini://notmyidea.org/name@example.com#anchor file\n'
         )
 
         # not escaped
+        # This no longer matches because gemtext format interprets the space
+        # in the URL as a separator beween it and the link text.
         args['content'] = (
-            'A simple test with a '
-            '<a href="{filename}article spaces.rst#anchor">link</a> '
-            '<a href="{static}name@example.com#anchor">file</a>'
+            'A simple test with a\n'
+            '=> {filename}article spaces.gmi#anchor link\n'
+            '=> {static}name@example.com#anchor file\n'
         )
-        content = Page(**args).get_content('http://notmyidea.org')
-        self.assertEqual(content, expected_output)
+        content = Page(**args).get_content('gemini://notmyidea.org')
+        self.assertNotEqual(content, expected_output)
 
         # html escaped
+        # This no longer matches because gemtext format interprets the space
+        # in the URL as a separator beween it and the link text.
         args['content'] = (
-            'A simple test with a '
-            '<a href="{filename}article spaces.rst#anchor">link</a> '
-            '<a href="{static}name&#64;example.com#anchor">file</a>'
+            'A simple test with a\n'
+            '=> {filename}article spaces.gmi#anchor link\n'
+            '=> {static}name&#64;example.com#anchor file\n'
         )
-        content = Page(**args).get_content('http://notmyidea.org')
-        self.assertEqual(content, expected_output)
+        content = Page(**args).get_content('gemini://notmyidea.org')
+        self.assertNotEqual(content, expected_output)
 
         # url escaped
         args['content'] = (
-            'A simple test with a '
-            '<a href="{filename}article%20spaces.rst#anchor">link</a> '
-            '<a href="{static}name%40example.com#anchor">file</a>'
+            'A simple test with a\n'
+            '=> {filename}article%20spaces.gmi#anchor link\n'
+            '=> {static}name%40example.com#anchor file\n'
         )
-        content = Page(**args).get_content('http://notmyidea.org')
+        content = Page(**args).get_content('gemini://notmyidea.org')
         self.assertEqual(content, expected_output)
 
         # html and url escaped
         args['content'] = (
-            'A simple test with a '
-            '<a href="{filename}article%20spaces.rst#anchor">link</a> '
-            '<a href="{static}name&#64;example.com#anchor">file</a>'
+            'A simple test with a\n'
+            '=> {filename}article%20spaces.gmi#anchor link\n'
+            '=> {static}name&#64;example.com#anchor file\n'
         )
-        content = Page(**args).get_content('http://notmyidea.org')
+        content = Page(**args).get_content('gemini://notmyidea.org')
         self.assertEqual(content, expected_output)
 
     def test_intrasite_link_markdown_spaces(self):
         cls_name = '_DummyArticle'
-        article = type(cls_name, (object,), {'url': 'article-spaces.html'})
+        article = type(cls_name, (object,), {'url': 'article-spaces.gmi'})
 
         args = self.page_kwargs.copy()
         args['settings'] = get_settings()
         args['source_path'] = 'content'
-        args['context']['generated_content'] = {'article spaces.rst': article}
+        args['context']['generated_content'] = {'article spaces.gmi': article}
 
         # An intrasite link via filename with %20 as a space
         args['content'] = (
-            'A simple test, with a '
-            '<a href="|filename|article%20spaces.rst">link</a>'
+            'A simple test, with a\n'
+            '=> |filename|article%20spaces.gmi link'
         )
-        content = Page(**args).get_content('http://notmyidea.org')
+        content = Page(**args).get_content('gemini://notmyidea.org')
         self.assertEqual(
             content,
-            'A simple test, with a '
-            '<a href="http://notmyidea.org/article-spaces.html">link</a>'
+            'A simple test, with a\n'
+            '=> gemini://notmyidea.org/article-spaces.gmi link'
         )
 
     def test_intrasite_link_source_and_generated(self):
@@ -606,21 +589,21 @@ class TestPage(TestBase):
         args['settings'] = get_settings()
         args['source_path'] = 'content'
         args['context']['generated_content'] = {
-            'article.rst': type(cls_name, (object,), {'url': 'article.html'})}
+            'article.gmi': type(cls_name, (object,), {'url': 'article.gmi'})}
         args['context']['static_content'] = {
-            'article.rst': type(cls_name, (object,), {'url': 'article.rst'})}
+            'article.gmi': type(cls_name, (object,), {'url': 'sources/article.gmi'})}
 
         args['content'] = (
-            'A simple test, with a link to an'
-            '<a href="{filename}article.rst">article</a> and its'
-            '<a href="{static}article.rst">source</a>'
+            'A simple test, with a link to an\n'
+            '=> {filename}article.gmi article\n'
+            '=> {static}article.gmi source\n'
         )
-        content = Page(**args).get_content('http://notmyidea.org')
+        content = Page(**args).get_content('gemini://notmyidea.org')
         self.assertEqual(
             content,
-            'A simple test, with a link to an'
-            '<a href="http://notmyidea.org/article.html">article</a> and its'
-            '<a href="http://notmyidea.org/article.rst">source</a>'
+            'A simple test, with a link to an\n'
+            '=> gemini://notmyidea.org/article.gmi article\n'
+            '=> gemini://notmyidea.org/sources/article.gmi source\n'
         )
 
     def test_intrasite_link_to_static_content_with_filename(self):
@@ -636,14 +619,14 @@ class TestPage(TestBase):
                 type(cls_name, (object,), {'url': 'images/poster.jpg'})}
 
         args['content'] = (
-            'A simple test, with a link to a'
-            '<a href="{filename}poster.jpg">poster</a>'
+            'A simple test, with a link to a\n'
+            '=> {filename}poster.jpg poster\n'
         )
-        content = Page(**args).get_content('http://notmyidea.org')
+        content = Page(**args).get_content('gemini://notmyidea.org')
         self.assertEqual(
             content,
-            'A simple test, with a link to a'
-            '<a href="http://notmyidea.org/images/poster.jpg">poster</a>'
+            'A simple test, with a link to a\n'
+            '=> gemini://notmyidea.org/images/poster.jpg poster\n'
         )
 
     def test_multiple_authors(self):
@@ -889,12 +872,12 @@ class TestStatic(LoggedTestCase):
     def test_attach_link_syntax(self):
         """{attach} link syntax triggers output path override & url replacement.
         """
-        html = '<a href="{attach}../foo.jpg">link</a>'
+        html = '=> {attach}../foo.jpg link'
         page = Page(
             content=html,
             metadata={'title': 'fakepage'},
             settings=self.settings,
-            source_path=os.path.join('dir', 'otherdir', 'fakepage.md'),
+            source_path=os.path.join('dir', 'otherdir', 'fakepage.gmi'),
             context=self.context)
         content = page.get_content('')
 
@@ -909,12 +892,12 @@ class TestStatic(LoggedTestCase):
     def test_tag_link_syntax(self):
         "{tag} link syntax triggers url replacement."
 
-        html = '<a href="{tag}foo">link</a>'
+        html = '=> {tag}foo link'
         page = Page(
             content=html,
             metadata={'title': 'fakepage'},
             settings=self.settings,
-            source_path=os.path.join('dir', 'otherdir', 'fakepage.md'),
+            source_path=os.path.join('dir', 'otherdir', 'fakepage.gmi'),
             context=self.context)
         content = page.get_content('')
 
@@ -923,12 +906,12 @@ class TestStatic(LoggedTestCase):
     def test_category_link_syntax(self):
         "{category} link syntax triggers url replacement."
 
-        html = '<a href="{category}foo">link</a>'
+        html = '=> {category}foo link'
         page = Page(
             content=html,
             metadata={'title': 'fakepage'},
             settings=self.settings,
-            source_path=os.path.join('dir', 'otherdir', 'fakepage.md'),
+            source_path=os.path.join('dir', 'otherdir', 'fakepage.gmi'),
             context=self.context)
         content = page.get_content('')
 
@@ -937,12 +920,12 @@ class TestStatic(LoggedTestCase):
     def test_author_link_syntax(self):
         "{author} link syntax triggers url replacement."
 
-        html = '<a href="{author}foo">link</a>'
+        html = '=> {author}foo link'
         page = Page(
             content=html,
             metadata={'title': 'fakepage'},
             settings=self.settings,
-            source_path=os.path.join('dir', 'otherdir', 'fakepage.md'),
+            source_path=os.path.join('dir', 'otherdir', 'fakepage.gmi'),
             context=self.context)
         content = page.get_content('')
 
@@ -951,30 +934,30 @@ class TestStatic(LoggedTestCase):
     def test_index_link_syntax(self):
         "{index} link syntax triggers url replacement."
 
-        html = '<a href="{index}">link</a>'
+        html = '=> {index} link'
         page = Page(
             content=html,
             metadata={'title': 'fakepage'},
             settings=self.settings,
-            source_path=os.path.join('dir', 'otherdir', 'fakepage.md'),
+            source_path=os.path.join('dir', 'otherdir', 'fakepage.gmi'),
             context=self.context)
         content = page.get_content('')
 
         self.assertNotEqual(content, html)
 
-        expected_html = ('<a href="' +
+        expected_html = ('=> ' +
                          '/'.join((self.settings['SITEURL'],
                                    self.settings['INDEX_SAVE_AS'])) +
-                         '">link</a>')
+                         ' link')
         self.assertEqual(content, expected_html)
 
     def test_unknown_link_syntax(self):
         "{unknown} link syntax should trigger warning."
 
-        html = '<a href="{unknown}foo">link</a>'
+        html = '=> {unknown}foo link'
         page = Page(content=html,
                     metadata={'title': 'fakepage'}, settings=self.settings,
-                    source_path=os.path.join('dir', 'otherdir', 'fakepage.md'),
+                    source_path=os.path.join('dir', 'otherdir', 'fakepage.gmi'),
                     context=self.context)
         content = page.get_content('')
 
@@ -988,10 +971,10 @@ class TestStatic(LoggedTestCase):
     def test_link_to_unknown_file(self):
         "{filename} link to unknown file should trigger warning."
 
-        html = '<a href="{filename}foo">link</a>'
+        html = '=> {filename}foo link'
         page = Page(content=html,
                     metadata={'title': 'fakepage'}, settings=self.settings,
-                    source_path=os.path.join('dir', 'otherdir', 'fakepage.md'),
+                    source_path=os.path.join('dir', 'otherdir', 'fakepage.gmi'),
                     context=self.context)
         content = page.get_content('')
 
@@ -1000,27 +983,6 @@ class TestStatic(LoggedTestCase):
             count=1,
             msg="Unable to find 'foo', skipping url replacement.",
             level=logging.WARNING)
-
-    def test_index_link_syntax_with_spaces(self):
-        """{index} link syntax triggers url replacement
-        with spaces around the equal sign."""
-
-        html = '<a href = "{index}">link</a>'
-        page = Page(
-            content=html,
-            metadata={'title': 'fakepage'},
-            settings=self.settings,
-            source_path=os.path.join('dir', 'otherdir', 'fakepage.md'),
-            context=self.context)
-        content = page.get_content('')
-
-        self.assertNotEqual(content, html)
-
-        expected_html = ('<a href = "' +
-                         '/'.join((self.settings['SITEURL'],
-                                   self.settings['INDEX_SAVE_AS'])) +
-                         '">link</a>')
-        self.assertEqual(content, expected_html)
 
     def test_not_save_as_draft(self):
         """Static.save_as is not affected by draft status."""

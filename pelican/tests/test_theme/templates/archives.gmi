@@ -1,0 +1,9 @@
+{% extends "base.gmi" %}
+
+{% block title %}# {{ SITENAME }} - Archives{% endblock %}
+
+{% block content %}
+{% for article in dates %}
+=> {{ SITEURL }}/{{ article.url }} {{ article.locale_date }} - {{ article.title }}
+{% endfor %}
+{% endblock %}

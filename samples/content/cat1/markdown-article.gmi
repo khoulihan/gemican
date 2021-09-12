@@ -1,0 +1,7 @@
+Title: A formerly markdown powered article
+Date: 2011-04-20
+
+You're mutually oblivious.
+
+=> {filename}/unbelievable.gmi a root-relative link to unbelievable
+=> {filename}../unbelievable.gmi a file-relative link to unbelievable

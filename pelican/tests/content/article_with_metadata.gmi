@@ -1,0 +1,13 @@
+Title: This is a super article !
+Tags: foo, bar, foobar
+Date: 2010-12-02 10:14
+Modified: 2010-12-02 10:20
+Category: yeah
+Author: Alexis Métaireau
+Summary:
+    Multi-line metadata should be supported
+    as well as **inline markup** and stuff to "typogrify"...
+Custom_field: http://notmyidea.org
+Custom_formatted_field:
+    Multi-line metadata should also be supported
+    as well as *inline markup* and stuff to "typogrify"...

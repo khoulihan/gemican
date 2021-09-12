@@ -1,0 +1,10 @@
+
+# A formerly markdown powered article
+Published: Wed 20 April 2011
+By Alexis MétaireauCategory: cat1
+
+You're mutually oblivious.
+
+=> ./unbelievable.gmi a root-relative link to unbelievable
+=> ./unbelievable.gmi a file-relative link to unbelievable
+

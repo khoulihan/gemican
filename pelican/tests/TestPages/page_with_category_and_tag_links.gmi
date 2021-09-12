@@ -1,0 +1,7 @@
+Title: Page with a bunch of links
+
+My links:
+
+=> {tag}マック Link 1
+
+=> {category}Yeah Link 2

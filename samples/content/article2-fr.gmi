@@ -1,0 +1,7 @@
+Title: Deuxième article
+Tags: foo, bar, baz
+Date: 2012-02-29
+Lang: fr
+Slug: second-article
+
+Ceci est un article, en français.

@@ -1,0 +1,12 @@
+title: Test mdown File
+category: test
+
+Test Markdown File Header
+=========================
+
+Used for pelican test
+---------------------
+
+This is another markdown test file.  Uses the gemini extension.
+
+TODO: This test is redundant now.

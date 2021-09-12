@@ -1,0 +1,18 @@
+# A Gemican Gemlog - Categories
+=> /tag/oh.gmi Oh Oh Oh
+=> /override/ Override url/save_as
+=> /pages/this-is-a-test-page.gmi This is a test page
+=> /category/bar.gmi">bar
+=> /category/cat1.gmi">cat1
+=> /category/misc.gmi">misc
+=> /category/yeah.gmi">yeah
+
+## Categories on A Gemican Gemlog
+=> /category/bar.gmi bar (1)
+=> /category/cat1.gmi cat1 (4)
+=> /category/misc.gmi misc (4)
+=> /category/yeah.gmi yeah (1)
+
+Proudly powered by Gemican, which takes great advantage of Python.
+
+=> https://www.python.org/ Python Powered

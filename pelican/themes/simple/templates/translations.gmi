@@ -1,0 +1,8 @@
+{% macro translations_for(article) %}
+{% if article.translations %}
+Translations:
+{% for translation in article.translations %}
+=> {{ SITEURL }}/{{ translation.url }} {{ translation.lang }}
+{% endfor %}
+{% endif %}
+{% endmacro %}

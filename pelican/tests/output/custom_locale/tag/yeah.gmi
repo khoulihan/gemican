@@ -1,0 +1,15 @@
+# Alexis' log - yeah tag
+=> ../tag/oh.gmi Oh Oh Oh
+=> ../override/ Override url/save_as
+=> ../pages/this-is-a-test-page.gmi This is a test page
+=> ../category/yeah.gmi">yeah
+=> ../category/misc.gmi">misc
+=> ../category/cat1.gmi">cat1
+=> ../category/bar.gmi">bar
+
+## Articles tagged with yeah
+=> ../posts/2010/octobre/20/oh-yeah/ Oh yeah !
+
+Proudly powered by Gemican, which takes great advantage of Python.
+
+=> https://www.python.org/ Python Powered

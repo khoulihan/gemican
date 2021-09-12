@@ -1,0 +1,14 @@
+
+# Oh yeah !Translations:
+=> ../../../../../oh-yeah-fr.gmi fr
+
+Published: 20 octobre 2010
+By Alexis MétaireauCategory: bar
+Tags: oh, bar, yeah
+## Why not ?
+
+After all, why not ? It's pretty simple to do it, and it will allow me to write my blogposts in rst !
+YEAH !
+
+=> ../../../../../pictures/Sushi.jpg alternate text
+

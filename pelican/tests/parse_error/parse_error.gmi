@@ -1,0 +1,4 @@
+Title: Page with a parse error
+Metadata without a colon, or no blank line before content.
+
+Content begins here

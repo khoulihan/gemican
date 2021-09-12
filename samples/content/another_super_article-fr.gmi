@@ -1,0 +1,6 @@
+Title: Trop bien !
+Date: 2010-10-20 10:14
+Lang: fr
+Slug: oh-yeah
+
+Et voila du contenu en français

@@ -1,0 +1,7 @@
+Title: First article
+Date: 2018-11-10
+Summary: Cyclical links
+
+=> {filename}/second-article.gmi
+=> {filename}/third-article.gmi
+=> {filename}/nonexistent.gmi

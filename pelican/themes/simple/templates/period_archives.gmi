@@ -1,0 +1,8 @@
+{% extends "base.gmi" %}
+{% block title %}# {{ SITENAME }} - {{ period | reverse | join(' ') }} archives{% endblock %}
+{% block content %}
+## Archives for {{ period | reverse | join(' ') }}
+{% for article in dates %}
+=> {{ SITEURL }}/{{ article.url }} {{ article.title|striptags }}
+{% endfor %}
+{% endblock %}
