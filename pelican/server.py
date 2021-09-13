@@ -22,22 +22,48 @@ logger = logging.getLogger(__name__)
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
-        description='Pelican Development Server',
+        description='Gemican Development Server',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
-    parser.add_argument("port", default=1966, type=int, nargs="?",
-                        help="Port to Listen On")
-    parser.add_argument("server", default="", nargs="?",
-                        help="Interface to Listen On")
-    parser.add_argument('--cert', default="./cert.pem", nargs="?",
-                        help='Path to certificate file. ' +
-                        'Relative to current directory')
-    parser.add_argument('--key', default="./key.pem", nargs="?",
-                        help='Path to certificate key file. ' +
-                        'Relative to current directory')
-    parser.add_argument('--path', default=".",
-                        help='Path to pelican source directory to serve. ' +
-                        'Relative to current directory')
+    parser.add_argument(
+        "port",
+        default=1966,
+        type=int,
+        nargs="?",
+        help="Port to Listen On"
+    )
+    parser.add_argument(
+        "server",
+        default="",
+        nargs="?",
+        help="Interface to Listen On"
+    )
+    parser.add_argument(
+        '--cert',
+        default="./cert.pem",
+        nargs="?",
+        help=(
+            'Path to certificate file. '
+            'Relative to current directory'
+        )
+    )
+    parser.add_argument(
+        '--key',
+        default="./key.pem",
+        nargs="?",
+        help=(
+            'Path to certificate key file. '
+            'Relative to current directory'
+        )
+    )
+    parser.add_argument(
+        '--path',
+        default=".",
+        help=(
+            'Path to pelican source directory to serve. '
+            'Relative to current directory'
+        )
+    )
     return parser.parse_args()
 
 
@@ -144,7 +170,7 @@ if __name__ == '__main__':
     init_logging(level=logging.INFO)
     logger.warning(
         "'python -m pelican.server' is deprecated.\nThe "
-        "Pelican development server should be run via "
+        "Gemican development server should be run via "
         "'pelican --listen' or 'pelican -l'.\nThis can be combined "
         "with regeneration as 'pelican -lr'.\nRerun 'pelican-"
         "quickstart' to get new Makefile and tasks.py files."
