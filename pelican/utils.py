@@ -981,3 +981,12 @@ def urljoin(base, url, *args, **kwargs):
     if is_gemini:
         result = result.replace('https://', 'gemini://')
     return result
+
+
+def urlparse(url, *args, **kwargs):
+    is_gemini = url.startswith('gemini://')
+    if is_gemini:
+        url = url.replace('gemini://', 'https://')
+    # This will still have a scheme of "https" if a scheme was included in
+    # the url to parse.
+    return urllib.parse.urlparse(url, *args, **kwargs)

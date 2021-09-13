@@ -159,6 +159,8 @@ DEFAULT_CONFIG = {
     'FORMATTED_FIELDS': ['summary'],
     'PORT': 1966,
     'BIND': '127.0.0.1',
+    'SSL_PRIVATE_KEY_FILE': 'key.pem',
+    'SSL_CERTIFICATE_FILE': 'cert.pem',
 }
 
 PYGMENTS_RST_OPTIONS = None

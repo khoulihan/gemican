@@ -24,7 +24,7 @@ from pelican.generators import (ArticlesGenerator,  # noqa: I100
 from pelican.plugins import signals
 from pelican.plugins._utils import get_plugin_name, load_plugins
 from pelican.readers import Readers
-from pelican.server import ComplexHTTPRequestHandler, RootedHTTPServer
+from pelican.server import GeminiServer
 from pelican.settings import coerce_overrides, read_settings
 from pelican.utils import (FileSystemWatcher, clean_output_dir, maybe_pluralize)
 from pelican.writers import Writer
@@ -350,14 +350,22 @@ def parse_arguments(argv=None):
                               ' to or above the specified value'))
 
     parser.add_argument('-l', '--listen', dest='listen', action='store_true',
-                        help='Serve content files via HTTP and port 8000.')
+                        help='Serve content files via the Gemini protocol.')
 
     parser.add_argument('-p', '--port', dest='port', type=int,
-                        help='Port to serve HTTP files at. (default: 8000)')
+                        help='Port to serve HTTP files at. (default: 1966)')
 
     parser.add_argument('-b', '--bind', dest='bind',
                         help='IP to bind to when serving files via HTTP '
                         '(default: 127.0.0.1)')
+
+    parser.add_argument('--key', dest='ssl_key',
+                        help='Path to SSL private key file '
+                        '(default: key.pem)')
+
+    parser.add_argument('--cert', dest='ssl_cert',
+                        help='Path to SSL certificate file '
+                        '(default: cert.pem)')
 
     parser.add_argument('-e', '--extra-settings', dest='overrides',
                         help='Specify one or more SETTING=VALUE pairs to '
@@ -403,6 +411,10 @@ def get_config(args):
         config['PORT'] = args.port
     if args.bind is not None:
         config['BIND'] = args.bind
+    if args.ssl_key is not None:
+        config['SSL_PRIVATE_KEY_FILE'] = args.ssl_key
+    if args.ssl_cert is not None:
+        config['SSL_CERTIFICATE_FILE'] = args.ssl_cert
     config['DEBUG'] = args.verbosity == logging.DEBUG
     config.update(coerce_overrides(args.overrides))
 
@@ -470,11 +482,15 @@ def autoreload(args, excqueue=None):
                 exc_info=settings.get('DEBUG', False))
 
 
-def listen(server, port, output, excqueue=None):
-    RootedHTTPServer.allow_reuse_address = True
+def listen(server, port, keyfile, certfile, output, excqueue=None):
     try:
-        httpd = RootedHTTPServer(
-            output, (server, port), ComplexHTTPRequestHandler)
+        geminid = GeminiServer(
+            output,
+            server,
+            port,
+            keyfile,
+            certfile,
+        )
     except OSError as e:
         logging.error("Could not listen on port %s, server %s.", port, server)
         if excqueue is not None:
@@ -482,16 +498,19 @@ def listen(server, port, output, excqueue=None):
         return
 
     try:
-        print("\nServing site at: http://{}:{} - Tap CTRL-C to stop".format(
-            server, port))
-        httpd.serve_forever()
+        print(
+            "\nServing site at: gemini://{}:{} - Tap CTRL-C to stop".format(
+                server, port
+            )
+        )
+        geminid.serve_forever()
     except Exception as e:
         if excqueue is not None:
             excqueue.put(traceback.format_exception_only(type(e), e)[-1])
         return
 
     except KeyboardInterrupt:
-        httpd.socket.close()
+        geminid.close()
         if excqueue is not None:
             return
         raise
@@ -516,8 +535,14 @@ def main(argv=None):
                 args=(args, excqueue))
             p2 = multiprocessing.Process(
                 target=listen,
-                args=(settings.get('BIND'), settings.get('PORT'),
-                      settings.get("OUTPUT_PATH"), excqueue))
+                args=(
+                    settings.get('BIND'),
+                    settings.get('PORT'),
+                    settings.get('SSL_PRIVATE_KEY_FILE'),
+                    settings.get('SSL_CERTIFICATE_FILE'),
+                    settings.get("OUTPUT_PATH"),
+                    excqueue,
+                ))
             p1.start()
             p2.start()
             exc = excqueue.get()
@@ -528,8 +553,13 @@ def main(argv=None):
         elif args.autoreload:
             autoreload(args)
         elif args.listen:
-            listen(settings.get('BIND'), settings.get('PORT'),
-                   settings.get("OUTPUT_PATH"))
+            listen(
+                settings.get('BIND'),
+                settings.get('PORT'),
+                settings.get('SSL_PRIVATE_KEY_FILE'),
+                settings.get('SSL_CERTIFICATE_FILE'),
+                settings.get("OUTPUT_PATH"),
+            )
         else:
             watcher = FileSystemWatcher(args.settings, Readers, settings)
             watcher.check()
