@@ -4,7 +4,7 @@ from shutil import which
 
 from invoke import task
 
-PKG_NAME = "pelican"
+PKG_NAME = "gemican"
 PKG_PATH = Path(PKG_NAME)
 DOCS_PORT = os.environ.get("DOCS_PORT", 8000)
 BIN_DIR = "bin" if os.name != "nt" else "Scripts"
@@ -105,11 +105,22 @@ def setup(c):
 def update_functional_tests(c):
     """Update the generated functional test output"""
     c.run(
-        f"bash -c 'LC_ALL=en_US.utf8 pelican -o {PKG_PATH}/tests/output/custom/ -s samples/pelican.conf.py samples/content/'"
+        (
+            f"bash -c 'LC_ALL=en_US.utf8 gemican"
+            f" -o {PKG_PATH}/tests/output/custom/"
+            f" -s samples/gemican.conf.py samples/content/'"
+        )
     )
     c.run(
-        f"bash -c 'LC_ALL=fr_FR.utf8 pelican -o {PKG_PATH}/tests/output/custom_locale/ -s samples/pelican.conf_FR.py samples/content/'"
+        (
+            f"bash -c 'LC_ALL=fr_FR.utf8 gemican"
+            f" -o {PKG_PATH}/tests/output/custom_locale/"
+            f" -s samples/gemican.conf_FR.py samples/content/'"
+        )
     )
     c.run(
-        f"bash -c 'LC_ALL=en_US.utf8 pelican -o {PKG_PATH}/tests/output/basic/ samples/content/'"
+        (
+            f"bash -c 'LC_ALL=en_US.utf8 gemican"
+            f" -o {PKG_PATH}/tests/output/basic/ samples/content/'"
+        )
     )

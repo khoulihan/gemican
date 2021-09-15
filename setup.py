@@ -14,11 +14,11 @@ requires = ['feedgenerator >= 1.9', 'jinja2 >= 2.7', 'pygments',
 
 entry_points = {
     'console_scripts': [
-        'pelican = pelican.__main__:main',
-        'pelican-import = pelican.tools.pelican_import:main',
-        'pelican-quickstart = pelican.tools.pelican_quickstart:main',
-        'pelican-themes = pelican.tools.pelican_themes:main',
-        'pelican-plugins = pelican.plugins._utils:list_plugins'
+        'gemican = gemican.__main__:main',
+        'gemican-import = gemican.tools.gemican_import:main',
+        'gemican-quickstart = gemican.tools.gemican_quickstart:main',
+        'gemican-themes = gemican.tools.gemican_themes:main',
+        'gemican-plugins = gemican.plugins._utils:list_plugins'
     ]
 }
 
@@ -28,20 +28,18 @@ CHANGELOG = open('docs/changelog.rst', encoding='utf-8').read()
 description = '\n'.join([README, CHANGELOG])
 
 setup(
-    name='pelican',
+    name='gemican',
     version=version,
-    url='https://getpelican.com/',
-    author='Justin Mayer',
-    author_email='authors@getpelican.com',
-    description="Static site generator supporting reStructuredText and "
-                "Markdown source content.",
+    url='https://github.com/khoulihan/gemican',
+    author='Kevin Houlihan',
+    author_email='kevin@crimsoncookie.com',
+    description="Static Gemini capsule generator supporting GemText",
     project_urls={
         'Documentation': 'https://docs.getpelican.com/',
-        'Funding': 'https://donate.getpelican.com/',
-        'Source': 'https://github.com/getpelican/pelican',
-        'Tracker': 'https://github.com/getpelican/pelican/issues',
+        'Source': 'https://github.com/khoulihan/gemican',
+        'Tracker': 'https://github.com/khoulihan/gemican/issues',
     },
-    keywords='static web site generator SSG reStructuredText Markdown',
+    keywords='static web site generator SSG Markdown gemini',
     license='AGPLv3',
     long_description=description,
     long_description_content_type='text/x-rst',
@@ -49,20 +47,17 @@ setup(
     include_package_data=True,  # includes all in MANIFEST.in if in package
     # NOTE : This will collect any files that happen to be in the themes
     # directory, even though they may not be checked into version control.
-    package_data={  # pelican/themes is not a package, so include manually
-        'pelican': [relpath(join(root, name), 'pelican')
-                    for root, _, names in walk(join('pelican', 'themes'))
+    package_data={  # gemican/themes is not a package, so include manually
+        'gemican': [relpath(join(root, name), 'gemican')
+                    for root, _, names in walk(join('gemican', 'themes'))
                     for name in names],
     },
     install_requires=requires,
-    extras_require={
-        'Markdown': ['markdown~=3.1.1']
-    },
     entry_points=entry_points,
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
+        'Development Status :: 2 - Pre-Alpha',
         'Environment :: Console',
-        'Framework :: Pelican',
+        'Framework :: Gemican',
         'License :: OSI Approved :: GNU Affero General Public License v3',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3',
@@ -73,5 +68,5 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
-    test_suite='pelican.tests',
+    test_suite='gemican.tests',
 )

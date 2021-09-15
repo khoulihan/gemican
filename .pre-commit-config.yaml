@@ -17,4 +17,4 @@ repos:
         entry: bash
         args: [-c, 'git diff HEAD | flake8 --diff --max-line-length=88']
 
-exclude: ^pelican/tests/output/
+exclude: ^gemican/tests/output/
