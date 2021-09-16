@@ -125,7 +125,7 @@ class GeminiProtocol(LineReceiver):
         if path.endswith('/'):
             path = f'{path}index.gmi'
         requested = Path(self.factory.base_path).resolve() / path.lstrip('/')
-        print(requested)
+
         if not requested.is_file():
             print("Not found")
             self._return_status(51, "The requested resource does not exist")
