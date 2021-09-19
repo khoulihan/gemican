@@ -1,7 +1,14 @@
 AUTHOR = 'Alexis Métaireau'
 SITENAME = "Alexis' log"
-SITEURL = 'http://blog.notmyidea.org'
+SITEURL = 'gemini://blog.notmyidea.org'
 TIMEZONE = "Europe/Paris"
+
+SITEASCII = """
+ _______                  __
+|     __|.-----.--------.|__|.----.---.-.-----.
+|    |  ||  -__|        ||  ||  __|  _  |     |
+|_______||_____|__|__|__||__||____|___._|__|__|
+"""
 
 # can be useful in development, but set to False when you're ready to publish
 RELATIVE_URLS = True

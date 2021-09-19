@@ -1,7 +1,4 @@
 {% extends "base.gmi" %}
-{% block title %}
-# {{ SITENAME }}
-{%endblock%}
 {% block content %}
 # {{ page.title }}
 {% import 'translations.gmi' as translations with context %}

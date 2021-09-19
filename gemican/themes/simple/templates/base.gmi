@@ -1,4 +1,9 @@
 {% block title %}
+{% if SITEASCII %}
+``` {{ SITENAME }} image
+{{ SITEASCII }}
+```
+{% endif %}
 # {{ SITENAME }}
 {% endblock title %}
 {% if SITESUBTITLE %}
