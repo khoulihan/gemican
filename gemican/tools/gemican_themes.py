@@ -30,7 +30,7 @@ _THEMES_PATH = os.path.join(
 )
 
 __version__ = '0.2'
-_BUILTIN_THEMES = ['simple', 'notmyidea']
+_BUILTIN_THEMES = ['simple', 'hyper']
 
 
 def main():
