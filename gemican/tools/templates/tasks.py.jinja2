@@ -10,7 +10,7 @@ from invoke import task
 from invoke.main import program
 from invoke.util import cd
 from gemican import main as gemican_main
-from gemican.server import ComplexHTTPRequestHandler, RootedHTTPServer
+from gemican.server import GeminiServer
 from gemican.settings import DEFAULT_CONFIG, get_settings_from_file
 
 OPEN_BROWSER_ON_SERVE = True
@@ -32,20 +32,9 @@ CONFIG = {
     'ssh_port': '{{ssh_port}}',
     'ssh_path': '{{ssh_target_dir}}',
 {% endif %}
-{% if cloudfiles %}
-    # Rackspace Cloud Files configuration settings
-    'cloudfiles_username': '{{cloudfiles_username}}',
-    'cloudfiles_api_key': '{{cloudfiles_api_key}}',
-    'cloudfiles_container': '{{cloudfiles_container}}',
-{% endif %}
-{% if github %}
-    # Github Pages configuration
-    'github_pages_branch': '{{github_pages_branch}}',
-    'commit_message': "'Publish site on {}'".format(datetime.date.today().isoformat()),
-{% endif %}
     # Host and port for `serve`
     'host': 'localhost',
-    'port': 8000,
+    'port': 1966,
 }
 
 @task
@@ -72,12 +61,9 @@ def regenerate(c):
 
 @task
 def serve(c):
-    """Serve site at http://$HOST:$PORT/ (default is localhost:8000)"""
+    """Serve site at gemini://$HOST:$PORT/ (default is localhost:1966)"""
 
-    class AddressReuseTCPServer(RootedHTTPServer):
-        allow_reuse_address = True
-
-    server = AddressReuseTCPServer(
+    server = GeminiServer(
         CONFIG['deploy_path'],
         (CONFIG['host'], CONFIG['port']),
         ComplexHTTPRequestHandler)
@@ -118,37 +104,15 @@ def livereload(c):
         '{}/templates/**/*.html'.format(theme_path),
     ]
 
-    content_file_extensions = ['.md', '.rst']
+    content_file_extensions = ['.gmi', '.gemini']
     for extension in content_file_extensions:
         content_glob = '{0}/**/*{1}'.format(SETTINGS['PATH'], extension)
         watched_globs.append(content_glob)
 
-    static_file_extensions = ['.css', '.js']
-    for extension in static_file_extensions:
-        static_file_glob = '{0}/static/**/*{1}'.format(theme_path, extension)
-        watched_globs.append(static_file_glob)
-
     for glob in watched_globs:
         server.watch(glob, cached_build)
 
-    if OPEN_BROWSER_ON_SERVE:
-        # Open site in default browser
-        import webbrowser
-        webbrowser.open("http://{host}:{port}".format(**CONFIG))
-
     server.serve(host=CONFIG['host'], port=CONFIG['port'], root=CONFIG['deploy_path'])
-
-{% if cloudfiles %}
-@task
-def cf_upload(c):
-    """Publish to Rackspace Cloud Files"""
-    rebuild(c)
-    with cd(CONFIG['deploy_path']):
-        c.run('swift -v -A https://auth.api.rackspacecloud.com/v1.0 '
-              '-U {cloudfiles_username} '
-              '-K {cloudfiles_api_key} '
-              'upload -c {cloudfiles_container} .'.format(**CONFIG))
-{% endif %}
 
 @task
 def publish(c):
@@ -160,16 +124,6 @@ def publish(c):
         '{} {ssh_user}@{ssh_host}:{ssh_path}'.format(
             CONFIG['deploy_path'].rstrip('/') + '/',
             **CONFIG))
-
-{% if github %}
-@task
-def gh_pages(c):
-    """Publish to GitHub Pages"""
-    preview(c)
-    c.run('ghp-import -b {github_pages_branch} '
-          '-m {commit_message} '
-          '{deploy_path} -p'.format(**CONFIG))
-{% endif %}
 
 def gemican_run(cmd):
     cmd += ' ' + program.core.remainder  # allows to pass-through args to gemican

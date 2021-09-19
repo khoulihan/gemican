@@ -40,11 +40,6 @@ _jinja_env = Environment(
 )
 
 
-_GITHUB_PAGES_BRANCHES = {
-    'personal': 'main',
-    'project': 'gh-pages'
-}
-
 CONF = {
     'gemican': 'gemican',
     'gemicanopts': '',
@@ -56,12 +51,6 @@ CONF = {
     'ssh_port': 22,
     'ssh_user': 'root',
     'ssh_target_dir': '/var/www',
-    's3_bucket': 'my_s3_bucket',
-    'cloudfiles_username': 'my_rackspace_username',
-    'cloudfiles_api_key': 'my_rackspace_api_key',
-    'cloudfiles_container': 'my_cloudfiles_container',
-    'dropbox_dir': '~/Dropbox/Public/',
-    'github_pages_branch': _GITHUB_PAGES_BRANCHES['project'],
     'default_pagination': 10,
     'siteurl': '',
     'lang': _DEFAULT_LANGUAGE,
@@ -187,7 +176,7 @@ def main():
 
     print('''Welcome to gemican-quickstart v{v}.
 
-This script will help you create a new Gemican-based website.
+This script will help you create a new Gemican-based capsule.
 
 Please answer the following questions so this script can generate the files
 needed by Gemican.
@@ -203,17 +192,17 @@ needed by Gemican.
               'Will save to:\n%s\n' % CONF['basedir'])
     else:
         CONF['basedir'] = os.path.abspath(os.path.expanduser(
-            ask('Where do you want to create your new web site?',
+            ask('Where do you want to create your new capsule?',
                 answer=str, default=args.path)))
 
-    CONF['sitename'] = ask('What will be the title of this web site?',
+    CONF['sitename'] = ask('What will be the title of this capsule?',
                            answer=str, default=args.title)
-    CONF['author'] = ask('Who will be the author of this web site?',
+    CONF['author'] = ask('Who will be the author of this capsule?',
                          answer=str, default=args.author)
-    CONF['lang'] = ask('What will be the default language of this web site?',
+    CONF['lang'] = ask('What will be the default language of this capsule?',
                        str, args.lang or CONF['lang'], 2)
 
-    if ask('Do you want to specify a URL prefix? e.g., https://example.com  ',
+    if ask('Do you want to specify a URL prefix? e.g., gemini://example.com  ',
            answer=bool, default=True):
         CONF['siteurl'] = ask('What is your URL prefix? (see '
                               'above example; no trailing slash)',
@@ -244,7 +233,7 @@ needed by Gemican.
             CONF['ftp_user'] = ask('What is your username on that server?',
                                    str, CONF['ftp_user'])
             CONF['ftp_target_dir'] = ask('Where do you want to put your '
-                                         'web site on that server?',
+                                         'capsule on that server?',
                                          str, CONF['ftp_target_dir'])
         if ask('Do you want to upload your website using SSH?',
                answer=bool, default=False):
@@ -256,45 +245,8 @@ needed by Gemican.
             CONF['ssh_user'] = ask('What is your username on that server?',
                                    str, CONF['ssh_user'])
             CONF['ssh_target_dir'] = ask('Where do you want to put your '
-                                         'web site on that server?',
+                                         'capsule on that server?',
                                          str, CONF['ssh_target_dir'])
-
-        if ask('Do you want to upload your website using Dropbox?',
-               answer=bool, default=False):
-            CONF['dropbox'] = True,
-            CONF['dropbox_dir'] = ask('Where is your Dropbox directory?',
-                                      str, CONF['dropbox_dir'])
-
-        if ask('Do you want to upload your website using S3?',
-               answer=bool, default=False):
-            CONF['s3'] = True,
-            CONF['s3_bucket'] = ask('What is the name of your S3 bucket?',
-                                    str, CONF['s3_bucket'])
-
-        if ask('Do you want to upload your website using '
-               'Rackspace Cloud Files?', answer=bool, default=False):
-            CONF['cloudfiles'] = True,
-            CONF['cloudfiles_username'] = ask('What is your Rackspace '
-                                              'Cloud username?', str,
-                                              CONF['cloudfiles_username'])
-            CONF['cloudfiles_api_key'] = ask('What is your Rackspace '
-                                             'Cloud API key?', str,
-                                             CONF['cloudfiles_api_key'])
-            CONF['cloudfiles_container'] = ask('What is the name of your '
-                                               'Cloud Files container?',
-                                               str,
-                                               CONF['cloudfiles_container'])
-
-        if ask('Do you want to upload your website using GitHub Pages?',
-               answer=bool, default=False):
-            CONF['github'] = True,
-            if ask('Is this your personal page (username.github.io)?',
-                   answer=bool, default=False):
-                CONF['github_pages_branch'] = \
-                    _GITHUB_PAGES_BRANCHES['personal']
-            else:
-                CONF['github_pages_branch'] = \
-                    _GITHUB_PAGES_BRANCHES['project']
 
     try:
         os.makedirs(os.path.join(CONF['basedir'], 'content'))
