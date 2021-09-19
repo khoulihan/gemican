@@ -1,23 +1,31 @@
-# Alexis' log - Articles by Alexis MétaireauA personal blog.
+# Alexis' log
+## A personal blog.
+
+### Pages
 => ../tag/oh.gmi Oh Oh Oh
 => ../override/ Override url/save_as
 => ../pages/this-is-a-test-page.gmi This is a test page
-=> ../category/yeah.gmi">yeah
-=> ../category/misc.gmi">misc
-=> ../category/cat1.gmi">cat1
-=> ../category/bar.gmi">bar
+### Categories
+=> ../category/yeah.gmi yeah
+=> ../category/misc.gmi misc
+=> ../category/cat1.gmi cat1
+=> ../category/bar.gmi bar
 
 ## Articles by Alexis Métaireau
 => ../article-2.gmi Article 2
 => ../article-3.gmi Article 3
 => ../this-is-a-super-article.gmi This is a super article !
 => ../oh-yeah.gmi Oh yeah !
-=> ../author/alexis-metaireau.gmi First page
-=> ../author/alexis-metaireau.gmi Previous page
+
+=> ../author/alexis-metaireau.gmi ❰ First page
+=> ../author/alexis-metaireau.gmi ❮ Previous page
 Page 2 / 3
-=> ../author/alexis-metaireau3.gmi Next page
-=> ../author/alexis-metaireau3.gmi Last page
+=> ../author/alexis-metaireau3.gmi ❯ Next page
+=> ../author/alexis-metaireau3.gmi ❱ Last page
+
+=> ../index.gmi ↩ Index
 
 Proudly powered by Gemican, which takes great advantage of Python.
 
+=> https://github.com/khoulihan/gemican Gemican GitHub
 => https://www.python.org/ Python Powered

@@ -1,7 +1,11 @@
 
 # Article 1
 Published: Thu 17 February 2011
-By Alexis MétaireauCategory: cat1
+By Alexis Métaireau
+Category: cat1
+
 
 Article 1
 
+
+=> ./index.gmi ↩ Index

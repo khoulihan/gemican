@@ -1,21 +1,28 @@
-# Alexis' log - Articles by Alexis Métaireau
+# Alexis' log
+
+### Pages
 => ../tag/oh.gmi Oh Oh Oh
 => ../override/ Override url/save_as
 => ../pages/this-is-a-test-page.gmi This is a test page
-=> ../category/yeah.gmi">yeah
-=> ../category/misc.gmi">misc
-=> ../category/cat1.gmi">cat1
-=> ../category/bar.gmi">bar
+### Categories
+=> ../category/yeah.gmi yeah
+=> ../category/misc.gmi misc
+=> ../category/cat1.gmi cat1
+=> ../category/bar.gmi bar
 
 ## Articles by Alexis Métaireau
 => ../posts/2012/novembre/30/filename_metadata-example/ FILENAME_METADATA example
 => ../posts/2012/février/29/second-article/ Second article
 => ../posts/2011/avril/20/a-formerly-markdown-powered-article/ A formerly markdown powered article
 => ../posts/2011/février/17/article-1/ Article 1
+
 Page 1 / 3
-=> ../author/alexis-metaireau2.gmi Next page
-=> ../author/alexis-metaireau3.gmi Last page
+=> ../author/alexis-metaireau2.gmi ❯ Next page
+=> ../author/alexis-metaireau3.gmi ❱ Last page
+
+=> ../index.gmi ↩ Index
 
 Proudly powered by Gemican, which takes great advantage of Python.
 
+=> https://github.com/khoulihan/gemican Gemican GitHub
 => https://www.python.org/ Python Powered

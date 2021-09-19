@@ -1,6 +1,6 @@
 Title: The baz tag
 Date: 2010-03-14
-URL: tag/baz.html
-save_as: tag/baz.html
+URL: tag/baz.gmi
+save_as: tag/baz.gmi
 
 This article overrides the listening of the articles under the baz tag.

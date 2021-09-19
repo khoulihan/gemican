@@ -1,7 +1,11 @@
 
 # FILENAME_METADATA example
 Published: Fri 30 November 2012
-By Alexis MétaireauCategory: misc
+By Alexis Métaireau
+Category: misc
+
 
 Some cool stuff!
 
+
+=> ./index.gmi ↩ Index

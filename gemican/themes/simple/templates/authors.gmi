@@ -1,8 +1,10 @@
 {% extends "base.gmi" %}
-{% block title %}# {{ SITENAME }} - Authors{% endblock %}
 {% block content %}
 ## Authors on {{ SITENAME }}
 {% for author, articles in authors|sort %}
 => {{ SITEURL }}/{{ author.url }} {{ author }} ({{ articles|count }})
 {% endfor %}
+
+{% include 'partials/nav_footer.gmi' %}
+
 {% endblock %}

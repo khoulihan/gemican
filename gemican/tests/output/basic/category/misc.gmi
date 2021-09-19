@@ -1,18 +1,24 @@
-# A Gemican Gemlog - misc category
+# A Gemican Gemlog
+
+### Pages
 => /tag/oh.gmi Oh Oh Oh
 => /override/ Override url/save_as
 => /pages/this-is-a-test-page.gmi This is a test page
-=> /category/bar.gmi">bar
-=> /category/cat1.gmi">cat1
-=> /category/misc.gmi">👉 misc
-=> /category/yeah.gmi">yeah
+### Categories
+=> /category/bar.gmi bar
+=> /category/cat1.gmi cat1
+=> /category/misc.gmi 👉 misc
+=> /category/yeah.gmi yeah
 
 ## Articles in the misc category
 => /filename_metadata-example.gmi FILENAME_METADATA example
 => /second-article.gmi Second article
 => /unbelievable.gmi Unbelievable !
-=> /tag/baz.html The baz tag
+=> /tag/baz.gmi The baz tag
+
+=> /index.gmi ↩ Index
 
 Proudly powered by Gemican, which takes great advantage of Python.
 
+=> https://github.com/khoulihan/gemican Gemican GitHub
 => https://www.python.org/ Python Powered

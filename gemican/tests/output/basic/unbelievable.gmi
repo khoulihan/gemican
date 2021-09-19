@@ -3,6 +3,7 @@
 Published: Fri 15 October 2010
 Category: misc
 
+
 Or completely awesome. Depends the needs.
 
 => /a-formerly-markdown-powered-article.gmi a root-relative link to another article
@@ -42,3 +43,5 @@ Or completely awesome. Depends the needs.
 
 Lovely.
 
+
+=> /index.gmi ↩ Index

@@ -1,11 +1,14 @@
 # A Gemican Gemlog - Archives
+
+### Pages
 => /tag/oh.gmi Oh Oh Oh
 => /override/ Override url/save_as
 => /pages/this-is-a-test-page.gmi This is a test page
-=> /category/bar.gmi">bar
-=> /category/cat1.gmi">cat1
-=> /category/misc.gmi">misc
-=> /category/yeah.gmi">yeah
+### Categories
+=> /category/bar.gmi bar
+=> /category/cat1.gmi cat1
+=> /category/misc.gmi misc
+=> /category/yeah.gmi yeah
 
 => /filename_metadata-example.gmi Fri 30 November 2012 - FILENAME_METADATA example
 => /second-article.gmi Wed 29 February 2012 - Second article
@@ -16,8 +19,13 @@
 => /this-is-a-super-article.gmi Thu 02 December 2010 - This is a super article !
 => /oh-yeah.gmi Wed 20 October 2010 - Oh yeah !
 => /unbelievable.gmi Fri 15 October 2010 - Unbelievable !
-=> /tag/baz.html Sun 14 March 2010 - The baz tag
+=> /tag/baz.gmi Sun 14 March 2010 - The baz tag
+
+=> /index.gmi ↩ Index
+
+=> /index.gmi ↩ Index
 
 Proudly powered by Gemican, which takes great advantage of Python.
 
+=> https://github.com/khoulihan/gemican Gemican GitHub
 => https://www.python.org/ Python Powered

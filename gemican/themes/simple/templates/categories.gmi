@@ -1,5 +1,4 @@
 {% extends "base.gmi" %}
-{% block title %}# {{ SITENAME }} - Categories{% endblock %}
 {% block content %}
 ## Categories on {{ SITENAME }}
 {% for category, articles in categories|sort %}

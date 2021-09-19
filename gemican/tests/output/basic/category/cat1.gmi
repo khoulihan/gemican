@@ -1,11 +1,14 @@
-# A Gemican Gemlog - cat1 category
+# A Gemican Gemlog
+
+### Pages
 => /tag/oh.gmi Oh Oh Oh
 => /override/ Override url/save_as
 => /pages/this-is-a-test-page.gmi This is a test page
-=> /category/bar.gmi">bar
-=> /category/cat1.gmi">👉 cat1
-=> /category/misc.gmi">misc
-=> /category/yeah.gmi">yeah
+### Categories
+=> /category/bar.gmi bar
+=> /category/cat1.gmi 👉 cat1
+=> /category/misc.gmi misc
+=> /category/yeah.gmi yeah
 
 ## Articles in the cat1 category
 => /a-formerly-markdown-powered-article.gmi A formerly markdown powered article
@@ -13,6 +16,9 @@
 => /article-2.gmi Article 2
 => /article-3.gmi Article 3
 
+=> /index.gmi ↩ Index
+
 Proudly powered by Gemican, which takes great advantage of Python.
 
+=> https://github.com/khoulihan/gemican Gemican GitHub
 => https://www.python.org/ Python Powered

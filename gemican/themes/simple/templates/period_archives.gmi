@@ -1,5 +1,4 @@
 {% extends "base.gmi" %}
-{% block title %}# {{ SITENAME }} - {{ period | reverse | join(' ') }} archives{% endblock %}
 {% block content %}
 ## Archives for {{ period | reverse | join(' ') }}
 {% for article in dates %}

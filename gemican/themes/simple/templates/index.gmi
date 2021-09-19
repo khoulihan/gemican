@@ -7,6 +7,7 @@
 => {{ SITEURL }}/{{ article.url }} {{ article.title|striptags }}
 {% endfor %}
 {% if articles_page.has_other_pages() %}
+
 {% include 'pagination.gmi' %}
 {% endif %}
 {% endblock content %}

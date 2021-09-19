@@ -1,10 +1,13 @@
 
-# Oh yeah !Translations:
+# Oh yeah !
+Published: Wed 20 October 2010
+By Alexis Métaireau
+Category: bar
+Tags: oh, bar, yeah
+Translations:
 => ./oh-yeah-fr.gmi fr
 
-Published: Wed 20 October 2010
-By Alexis MétaireauCategory: bar
-Tags: oh, bar, yeah
+
 ## Why not ?
 
 After all, why not ? It's pretty simple to do it, and it will allow me to write my blogposts in rst !
@@ -12,3 +15,5 @@ YEAH !
 
 => ./pictures/Sushi.jpg alternate text
 
+
+=> ./index.gmi ↩ Index

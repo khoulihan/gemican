@@ -1,15 +1,11 @@
-# Alexis' log - baz tagA personal blog.
-=> ../tag/oh.gmi Oh Oh Oh
-=> ../override/ Override url/save_as
-=> ../pages/this-is-a-test-page.gmi This is a test page
-=> ../category/yeah.gmi">yeah
-=> ../category/misc.gmi">misc
-=> ../category/cat1.gmi">cat1
-=> ../category/bar.gmi">bar
 
-## Articles tagged with baz
-=> ../second-article.gmi Second article
+# The baz tag
+Published: Sun 14 March 2010
+By Alexis Métaireau
+Category: misc
 
-Proudly powered by Gemican, which takes great advantage of Python.
 
-=> https://www.python.org/ Python Powered
+This article overrides the listening of the articles under the baz tag.
+
+
+=> ../index.gmi ↩ Index

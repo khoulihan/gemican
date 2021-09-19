@@ -1,9 +1,12 @@
 
-# Trop bien !Translations:
-=> /oh-yeah.gmi en
-
+# Trop bien !
 Published: Wed 20 October 2010
 Category: misc
+Translations:
+=> /oh-yeah.gmi en
+
 
 Et voila du contenu en français
 
+
+=> /index.gmi ↩ Index

@@ -1,5 +1,4 @@
 {% extends "base.gmi" %}
-{% block title %}# {{ SITENAME }} - Tags{% endblock %}
 {% block content %}
 ## Tags for {{ SITENAME }}
 {% for tag, articles in tags|sort %}

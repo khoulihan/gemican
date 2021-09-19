@@ -31,5 +31,5 @@ YEAH !
 
 ``` Longer Python code
 
-    def …</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alexis Métaireau</dc:creator><pubDate>Fri, 15 Oct 2010 20:30:00 +0200</pubDate><guid isPermaLink="false">tag:blog.notmyidea.org,2010-10-15:/unbelievable.gmi</guid><category>misc</category></item><item><title>The baz tag</title><link>http://blog.notmyidea.org/tag/baz.html</link><description>This article overrides the listening of the articles under the baz tag.
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alexis Métaireau</dc:creator><pubDate>Sun, 14 Mar 2010 00:00:00 +0100</pubDate><guid isPermaLink="false">tag:blog.notmyidea.org,2010-03-14:/tag/baz.html</guid><category>misc</category></item></channel></rss>
+    def …</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alexis Métaireau</dc:creator><pubDate>Fri, 15 Oct 2010 20:30:00 +0200</pubDate><guid isPermaLink="false">tag:blog.notmyidea.org,2010-10-15:/unbelievable.gmi</guid><category>misc</category></item><item><title>The baz tag</title><link>http://blog.notmyidea.org/tag/baz.gmi</link><description>This article overrides the listening of the articles under the baz tag.
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alexis Métaireau</dc:creator><pubDate>Sun, 14 Mar 2010 00:00:00 +0100</pubDate><guid isPermaLink="false">tag:blog.notmyidea.org,2010-03-14:/tag/baz.gmi</guid><category>misc</category></item></channel></rss>

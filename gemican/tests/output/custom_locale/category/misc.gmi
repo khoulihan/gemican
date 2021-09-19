@@ -1,18 +1,24 @@
-# Alexis' log - misc category
+# Alexis' log
+
+### Pages
 => ../tag/oh.gmi Oh Oh Oh
 => ../override/ Override url/save_as
 => ../pages/this-is-a-test-page.gmi This is a test page
-=> ../category/yeah.gmi">yeah
-=> ../category/misc.gmi">👉 misc
-=> ../category/cat1.gmi">cat1
-=> ../category/bar.gmi">bar
+### Categories
+=> ../category/yeah.gmi yeah
+=> ../category/misc.gmi 👉 misc
+=> ../category/cat1.gmi cat1
+=> ../category/bar.gmi bar
 
 ## Articles in the misc category
 => ../posts/2012/novembre/30/filename_metadata-example/ FILENAME_METADATA example
 => ../posts/2012/février/29/second-article/ Second article
 => ../posts/2010/octobre/15/unbelievable/ Unbelievable !
-=> ../tag/baz.html The baz tag
+=> ../tag/baz.gmi The baz tag
+
+=> ../index.gmi ↩ Index
 
 Proudly powered by Gemican, which takes great advantage of Python.
 
+=> https://github.com/khoulihan/gemican Gemican GitHub
 => https://www.python.org/ Python Powered

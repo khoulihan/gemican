@@ -87,5 +87,5 @@ YEAH !
 ```
 
 Lovely.
-</content><category term="misc"></category></entry><entry><title>The baz tag</title><link href="http://blog.notmyidea.org/tag/baz.html" rel="alternate"></link><published>2010-03-14T00:00:00+01:00</published><updated>2010-03-14T00:00:00+01:00</updated><author><name>Alexis Métaireau</name></author><id>tag:blog.notmyidea.org,2010-03-14:/tag/baz.html</id><content type="html">This article overrides the listening of the articles under the baz tag.
+</content><category term="misc"></category></entry><entry><title>The baz tag</title><link href="http://blog.notmyidea.org/tag/baz.gmi" rel="alternate"></link><published>2010-03-14T00:00:00+01:00</published><updated>2010-03-14T00:00:00+01:00</updated><author><name>Alexis Métaireau</name></author><id>tag:blog.notmyidea.org,2010-03-14:/tag/baz.gmi</id><content type="html">This article overrides the listening of the articles under the baz tag.
 </content><category term="misc"></category></entry></feed>
