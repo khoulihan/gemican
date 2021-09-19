@@ -1,0 +1,5 @@
+# {{ page.title }}
+
+{{ page.content }}
+
+{% include "partials/back_nav.gmi" %}

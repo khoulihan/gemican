@@ -1,0 +1,20 @@
+{{ page.content }}
+
+{% for p in pages %}
+=> {{p.url}} {{p.title}}
+{% endfor %}
+
+=> {{SITEURL}}/gemlog.gmi 📒 Gemlog
+
+
+### External Links
+
+{% for link in LINKS %}
+=> {{ link[1] }} {{ link[0] }}
+{% endfor %}
+
+### Socials
+
+{% for social in SOCIAL %}
+=> {{ social[1] }} {{ social[0] }}
+{% endfor %}

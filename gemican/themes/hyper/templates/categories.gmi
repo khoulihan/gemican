@@ -1,0 +1,8 @@
+# Categories
+
+{% include "partials/back_nav.gmi" %}
+
+
+{% for category in categories %}
+=> {{ SITEURL }}/{{ category[0].url }} {{ category[0].name }} ({{ category[1]|length }} articles)
+{% endfor %}
