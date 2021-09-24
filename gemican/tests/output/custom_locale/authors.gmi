@@ -20,6 +20,7 @@
 
 ## Authors on Alexis' log
 => ./author/alexis-metaireau.gmi Alexis Métaireau (10)
+=> ./author/kevin-houlihan.gmi Kevin Houlihan (1)
 
 => ./index.gmi ↩ Index
 

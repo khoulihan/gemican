@@ -10,18 +10,10 @@
 => /category/misc.gmi misc
 => /category/yeah.gmi yeah
 
-## All articles
+## Articles by Kevin Houlihan
 => /markdowns-back.gmi Markdown's Back!
-=> /filename_metadata-example.gmi FILENAME_METADATA example
-=> /second-article.gmi Second article
-=> /a-formerly-markdown-powered-article.gmi A formerly markdown powered article
-=> /article-1.gmi Article 1
-=> /article-2.gmi Article 2
-=> /article-3.gmi Article 3
-=> /this-is-a-super-article.gmi This is a super article !
-=> /oh-yeah.gmi Oh yeah !
-=> /unbelievable.gmi Unbelievable !
-=> /tag/baz.gmi The baz tag
+
+=> /index.gmi ↩ Index
 
 Proudly powered by Gemican, which takes great advantage of Python.
 

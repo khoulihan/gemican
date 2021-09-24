@@ -18,9 +18,8 @@
 => ../category/cat1.gmi cat1
 => ../category/bar.gmi bar
 
-## Articles tagged with yeah
+## Articles by Kevin Houlihan
 => ../posts/2021/septembre/24/markdowns-back/ Markdown's Back!
-=> ../posts/2010/octobre/20/oh-yeah/ Oh yeah !
 
 => ../index.gmi ↩ Index
 

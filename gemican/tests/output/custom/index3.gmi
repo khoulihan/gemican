@@ -20,6 +20,7 @@
 => ./category/bar.gmi bar
 
 ## All articles
+=> ./oh-yeah.gmi Oh yeah !
 => ./unbelievable.gmi Unbelievable !
 => ./tag/baz.gmi The baz tag
 

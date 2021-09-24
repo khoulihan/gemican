@@ -20,10 +20,10 @@
 => ./category/bar.gmi bar
 
 ## All articles
+=> ./markdowns-back.gmi Markdown's Back!
 => ./filename_metadata-example.gmi FILENAME_METADATA example
 => ./second-article.gmi Second article
 => ./a-formerly-markdown-powered-article.gmi A formerly markdown powered article
-=> ./article-1.gmi Article 1
 
 Page 1 / 3
 => ./index2.gmi ❯ Next page

@@ -19,10 +19,10 @@
 => ./category/bar.gmi bar
 
 ## All articles
+=> ./posts/2011/février/17/article-1/ Article 1
 => ./posts/2011/février/17/article-2/ Article 2
 => ./posts/2011/février/17/article-3/ Article 3
 => ./posts/2010/décembre/02/this-is-a-super-article/ This is a super article !
-=> ./posts/2010/octobre/20/oh-yeah/ Oh yeah !
 
 => ./index.gmi ❰ First page
 => ./index.gmi ❮ Previous page

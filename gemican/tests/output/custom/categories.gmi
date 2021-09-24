@@ -20,7 +20,7 @@
 => ./category/bar.gmi bar
 
 ## Categories on Alexis' log
-=> ./category/bar.gmi bar (1)
+=> ./category/bar.gmi bar (2)
 => ./category/cat1.gmi cat1 (4)
 => ./category/misc.gmi misc (4)
 => ./category/yeah.gmi yeah (1)

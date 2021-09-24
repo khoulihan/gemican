@@ -12,6 +12,7 @@
 
 ## Authors on A Gemican Gemlog
 => /author/alexis-metaireau.gmi Alexis Métaireau (2)
+=> /author/kevin-houlihan.gmi Kevin Houlihan (1)
 
 => /index.gmi ↩ Index
 

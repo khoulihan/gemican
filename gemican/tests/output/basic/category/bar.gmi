@@ -11,6 +11,7 @@
 => /category/yeah.gmi yeah
 
 ## Articles in the bar category
+=> /markdowns-back.gmi Markdown's Back!
 => /oh-yeah.gmi Oh yeah !
 
 => /index.gmi ↩ Index

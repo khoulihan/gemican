@@ -145,11 +145,13 @@ class TestCache(unittest.TestCase):
         generator.readers.read_file = MagicMock()
         generator.generate_context()
         """
-        2 files don't get cached because they were not valid
+        4 files don't get cached because they were not valid
         - empty.md
         - empty_with_bom.md
+        - empty.gmi
+        - empty_with_bom.gmi
         """
-        self.assertEqual(generator.readers.read_file.call_count, 2)
+        self.assertEqual(generator.readers.read_file.call_count, 4)
 
     def test_article_reader_content_caching(self):
         """Test raw article content caching at the reader level"""

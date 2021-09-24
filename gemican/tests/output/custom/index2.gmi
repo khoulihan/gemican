@@ -20,10 +20,10 @@
 => ./category/bar.gmi bar
 
 ## All articles
+=> ./article-1.gmi Article 1
 => ./article-2.gmi Article 2
 => ./article-3.gmi Article 3
 => ./this-is-a-super-article.gmi This is a super article !
-=> ./oh-yeah.gmi Oh yeah !
 
 => ./index.gmi ❰ First page
 => ./index.gmi ❮ Previous page

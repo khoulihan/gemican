@@ -6,5 +6,3 @@ category: test
 ### Used for gemican test
 
 This is another markdown test file.  Uses the mkd extension.
-
-TODO: This test is redundant now.

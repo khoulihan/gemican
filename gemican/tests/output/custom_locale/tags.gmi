@@ -19,12 +19,12 @@
 => ./category/bar.gmi bar
 
 ## Tags for Alexis' log
-=> ./tag/bar.gmi bar (3)
+=> ./tag/bar.gmi bar (4)
 => ./tag/baz.gmi baz (1)
 => ./tag/foo.gmi foo (2)
 => ./tag/foobar.gmi foobar (1)
-=> ./tag/oh.gmi oh (1)
-=> ./tag/yeah.gmi yeah (1)
+=> ./tag/oh.gmi oh (2)
+=> ./tag/yeah.gmi yeah (2)
 
 => ./index.gmi ↩ Index
 

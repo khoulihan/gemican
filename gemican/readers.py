@@ -9,6 +9,11 @@ from gemican.contents import Author, Category, Page, Tag
 from gemican.plugins import signals
 from gemican.utils import get_date, posixize_path
 
+try:
+    from md2gemini import md2gemini
+except ImportError:
+    md2gemini = False  # NOQA
+
 # Metadata processors have no way to discard an unwanted value, so we have
 # them return this value instead to signal that it should be discarded later.
 # This means that _filter_discardable_metadata() must be called on processed
@@ -124,13 +129,15 @@ class BaseReader:
         return content, metadata
 
 
-class GeminiReader(BaseReader):
-    """
-    Parses gemtext files as input.
-    """
-    enabled = True
+class MarkdownMetaDataReader(BaseReader):
+    """Base class for readers with Markdown-style metadata
 
-    file_extensions = ['gmi', 'gemini']
+    Content is not parsed in any way.
+    """
+
+    enabled = False
+    file_extensions = []
+    extensions = None
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -213,6 +220,38 @@ class GeminiReader(BaseReader):
         return content, parsed
 
 
+class GeminiReader(MarkdownMetaDataReader):
+    """
+    Parses gemtext files as input.
+    """
+    enabled = True
+    file_extensions = ['gmi', 'gemini']
+
+
+class MarkdownReader(MarkdownMetaDataReader):
+    """Reader for Markdown files"""
+
+    enabled = bool(md2gemini)
+    file_extensions = ['md', 'markdown', 'mkd', 'mdown']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.markdown_settings = self.settings['MARKDOWN']
+
+    def read(self, source_path):
+        """Parse content and metadata of markdown files"""
+
+        text, meta = super().read(source_path)
+
+        self._source_path = source_path
+        content = md2gemini(text, **self.markdown_settings).rstrip('\ufeff')
+        # md2gemini does not include a newline at the end even if one
+        # was present in the content.
+        if len(content) > 0:
+            content += '\r\n'
+        return content, meta
+
+
 class Readers(FileStampDataCacher):
     """Interface for all readers.
 
@@ -228,7 +267,12 @@ class Readers(FileStampDataCacher):
         self.readers = {}
         self.reader_classes = {}
 
-        for cls in [BaseReader] + BaseReader.__subclasses__():
+        reader_classes = [BaseReader]
+        reader_classes.extend(BaseReader.__subclasses__())
+        reader_classes.extend(MarkdownMetaDataReader.__subclasses__())
+
+        for cls in reader_classes:
+
             if not cls.enabled:
                 logger.debug('Missing dependencies for %s',
                              ', '.join(cls.file_extensions))

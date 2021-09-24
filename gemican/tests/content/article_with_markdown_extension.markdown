@@ -5,4 +5,4 @@ category: test
 
 ### Used for gemican test
 
-This is another gemtext test file.  Uses the gemini extension.
+This is another markdown test file.  Uses the markdown extension.

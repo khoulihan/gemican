@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Alexis' log - Kevin Houlihan</title><link href="gemini://blog.notmyidea.org/" rel="alternate"></link><link href="gemini://blog.notmyidea.org/feeds/kevin-houlihan.atom.xml" rel="self"></link><id>gemini://blog.notmyidea.org/</id><updated>2021-09-24T14:40:00+02:00</updated><subtitle>A personal blog.</subtitle><subtitle>A personal blog.</subtitle><entry><title>Markdown's Back!</title><link href="gemini://blog.notmyidea.org/markdowns-back.gmi" rel="alternate"></link><published>2021-09-24T14:40:00+02:00</published><updated>2021-09-24T14:40:00+02:00</updated><author><name>Kevin Houlihan</name></author><id>tag:blog.notmyidea.org,2021-09-24:/markdowns-back.gmi</id><summary type="html">And we love it!
+</summary><content type="html">## And we love it!
+
+Markdown is handled by the md2gemini[1] package. It uses "paragraph" style links by default, but can be configured using the `MARKDOWN` settings dictionary.
+
+
+=&gt; https://github.com/makeworld-the-better-one/md2gemini 1: https://github.com/makeworld-the-better-one/md2gemini
+</content><category term="bar"></category><category term="oh"></category><category term="bar"></category><category term="yeah"></category></entry></feed>

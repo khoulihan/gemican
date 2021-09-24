@@ -396,3 +396,155 @@ class GemtextReaderTest(ReaderTest):
     #     # some such
     #     with self.assertRaisesRegex(Exception, "underline too short"):
     #         self.read_file(path='../parse_error/parse_error.gmi')
+
+
+@unittest.skipUnless(readers.MarkdownReader, "markdown isn't installed")
+class MarkdownReaderTest(ReaderTest):
+
+    def test_article_with_metadata(self):
+        page = self.read_file(path='article_with_md_extension.md')
+        expected = {
+            'category': 'test',
+            'title': 'Test md File',
+            'summary': 'I have a lot to test\n',
+            'date': SafeDatetime(2010, 12, 2, 10, 14),
+            'modified': SafeDatetime(2010, 12, 2, 10, 20),
+            'tags': ['foo', 'bar', 'foobar'],
+        }
+        self.assertDictHasSubset(page.metadata, expected)
+
+        page = self.read_file(path='article_with_markdown_and_nonascii_summary.md')
+        expected = {
+            'title': 'マックOS X 10.8でパイソンとVirtualenvをインストールと設定',
+            'summary': 'パイソンとVirtualenvをまっくでインストールする方法について明確に説明します。\n',
+            'category': '指導書',
+            'date': SafeDatetime(2012, 12, 20),
+            'modified': SafeDatetime(2012, 12, 22),
+            'tags': ['パイソン', 'マック'],
+            'slug': 'python-virtualenv-on-mac-osx-mountain-lion-10.8',
+        }
+        self.assertDictHasSubset(page.metadata, expected)
+
+    def test_article_with_file_extensions(self):
+        # test to ensure the md file extension is being processed by the
+        # correct reader
+        page = self.read_file(path='article_with_md_extension.md')
+        expected = (
+            "# Test Markdown File Header\r\n\r\n"
+            "## Used for gemican test\r\n\r\n"
+            "The quick brown fox jumped over the lazy dog's back.\r\n")
+        self.assertEqual(page.content, expected)
+        # test to ensure the mkd file extension is being processed by the
+        # correct reader
+        page = self.read_file(path='article_with_mkd_extension.mkd')
+        expected = ("## Test Markdown File Header\r\n\r\n### Used for gemican"
+                    " test\r\n\r\nThis is another markdown test file.  Uses"
+                    " the mkd extension.\r\n")
+        self.assertEqual(page.content, expected)
+        # test to ensure the markdown file extension is being processed by the
+        # correct reader
+        page = self.read_file(path='article_with_markdown_extension.markdown')
+        expected = ("## Test Markdown File Header\r\n\r\n### Used for gemican"
+                    " test\r\n\r\nThis is another markdown test file.  Uses"
+                    " the markdown extension.\r\n")
+        self.assertEqual(page.content, expected)
+        # test to ensure the mdown file extension is being processed by the
+        # correct reader
+        page = self.read_file(path='article_with_mdown_extension.mdown')
+        expected = ("# Test Markdown File Header\r\n\r\n## Used for gemican"
+                    " test\r\n\r\nThis is another markdown test file.  Uses"
+                    " the mdown extension.\r\n")
+        self.assertEqual(page.content, expected)
+
+    def test_article_with_filename_metadata(self):
+        page = self.read_file(
+            path='2012-11-30_md_w_filename_meta#foo-bar.md',
+            FILENAME_METADATA=None)
+        expected = {
+            'category': 'yeah',
+            'author': 'Alexis Métaireau',
+        }
+        self.assertDictHasSubset(page.metadata, expected)
+
+        page = self.read_file(
+            path='2012-11-30_md_w_filename_meta#foo-bar.md',
+            FILENAME_METADATA=r'(?P<date>\d{4}-\d{2}-\d{2}).*')
+        expected = {
+            'category': 'yeah',
+            'author': 'Alexis Métaireau',
+            'date': SafeDatetime(2012, 11, 30),
+        }
+        self.assertDictHasSubset(page.metadata, expected)
+
+        page = self.read_file(
+            path='2012-11-30_md_w_filename_meta#foo-bar.md',
+            FILENAME_METADATA=(
+                r'(?P<date>\d{4}-\d{2}-\d{2})'
+                r'_(?P<Slug>.*)'
+                r'#(?P<MyMeta>.*)-(?P<author>.*)'))
+        expected = {
+            'category': 'yeah',
+            'author': 'Alexis Métaireau',
+            'date': SafeDatetime(2012, 11, 30),
+            'slug': 'md_w_filename_meta',
+            'mymeta': 'foo',
+        }
+        self.assertDictHasSubset(page.metadata, expected)
+
+    def test_article_with_optional_filename_metadata(self):
+        page = self.read_file(
+            path='2012-11-30_md_w_filename_meta#foo-bar.md',
+            FILENAME_METADATA=r'(?P<date>\d{4}-\d{2}-\d{2})?')
+        expected = {
+            'date': SafeDatetime(2012, 11, 30),
+            'reader': 'markdown',
+        }
+        self.assertDictHasSubset(page.metadata, expected)
+
+        page = self.read_file(
+            path='empty.md',
+            FILENAME_METADATA=r'(?P<date>\d{4}-\d{2}-\d{2})?')
+        expected = {
+            'reader': 'markdown',
+        }
+        self.assertDictHasSubset(page.metadata, expected)
+        self.assertNotIn('date', page.metadata, 'Date should not be set.')
+
+    def test_duplicate_tags_or_authors_are_removed(self):
+        reader = readers.MarkdownReader(settings=get_settings())
+        content, metadata = reader.read(
+            _path('article_with_duplicate_tags_authors.md'))
+        expected = {
+            'tags': ['foo', 'bar', 'foobar'],
+            'authors': ['Author, First', 'Author, Second'],
+        }
+        self.assertDictHasSubset(metadata, expected)
+
+    def test_metadata_not_parsed_for_metadata(self):
+        settings = get_settings()
+        settings['FORMATTED_FIELDS'] = ['summary']
+
+        reader = readers.MarkdownReader(settings=settings)
+        content, metadata = reader.read(
+            _path('article_with_markdown_and_nested_metadata.md'))
+        expected = {
+            'title': 'Article with markdown and nested summary metadata',
+            'summary': 'Test: This metadata value looks like metadata\n',
+        }
+        self.assertDictHasSubset(metadata, expected)
+
+    def test_empty_file(self):
+        reader = readers.MarkdownReader(settings=get_settings())
+        content, metadata = reader.read(
+            _path('empty.md'))
+
+        self.assertEqual(metadata, {})
+        self.assertEqual(content, '')
+
+    def test_empty_file_with_bom(self):
+        reader = readers.MarkdownReader(settings=get_settings())
+        content, metadata = reader.read(
+            _path('empty_with_bom.md'))
+
+        self.assertEqual(metadata, {})
+        self.assertEqual(content, '')

@@ -19,6 +19,7 @@
 => ./category/bar.gmi bar
 
 ## All articles
+=> ./posts/2010/octobre/20/oh-yeah/ Oh yeah !
 => ./posts/2010/octobre/15/unbelievable/ Unbelievable !
 => ./tag/baz.gmi The baz tag
 

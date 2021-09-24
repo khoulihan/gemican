@@ -1,0 +1,17 @@
+
+# Markdown's Back!
+Published: Fri 24 September 2021
+By Kevin Houlihan
+Category: bar
+Tags: oh, bar, yeah
+
+
+## And we love it!
+
+Markdown is handled by the md2gemini[1] package. It uses "paragraph" style links by default, but can be configured using the `MARKDOWN` settings dictionary.
+
+
+=> https://github.com/makeworld-the-better-one/md2gemini 1: https://github.com/makeworld-the-better-one/md2gemini
+
+
+=> ./index.gmi ↩ Index

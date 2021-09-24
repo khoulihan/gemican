@@ -7,6 +7,7 @@
 
 ```
 # Alexis' log
+## A personal blog.
 
 ### Pages
 => ../tag/oh.gmi Oh Oh Oh
@@ -18,9 +19,8 @@
 => ../category/cat1.gmi cat1
 => ../category/bar.gmi bar
 
-## Articles tagged with yeah
-=> ../posts/2021/septembre/24/markdowns-back/ Markdown's Back!
-=> ../posts/2010/octobre/20/oh-yeah/ Oh yeah !
+## Articles by Kevin Houlihan
+=> ../markdowns-back.gmi Markdown's Back!
 
 => ../index.gmi ↩ Index
 

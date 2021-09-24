@@ -7,6 +7,4 @@ Test Markdown File Header
 Used for gemican test
 ---------------------
 
-This is another markdown test file.  Uses the gemini extension.
-
-TODO: This test is redundant now.
+This is another markdown test file.  Uses the mdown extension.

@@ -112,6 +112,12 @@ DEFAULT_CONFIG = {
     'PELICAN_CLASS': 'gemican.Gemican',
     'DEFAULT_DATE_FORMAT': '%a %d %B %Y',
     'DATE_FORMATS': {},
+    'MARKDOWN': {
+        'strip_html': True,
+        'plain': False,
+        'code_tag': "",
+        'links': 'paragraph',
+    },
     'JINJA_FILTERS': {},
     'JINJA_GLOBALS': {},
     'JINJA_TESTS': {},

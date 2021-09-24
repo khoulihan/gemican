@@ -10,6 +10,7 @@
 => ./category/cat1.gmi cat1
 => ./category/bar.gmi bar
 
+=> ./posts/2021/septembre/24/markdowns-back/ 24 septembre 2021 - Markdown's Back!
 => ./posts/2012/novembre/30/filename_metadata-example/ 30 novembre 2012 - FILENAME_METADATA example
 => ./posts/2012/février/29/second-article/ 29 février 2012 - Second article
 => ./posts/2011/avril/20/a-formerly-markdown-powered-article/ 20 avril 2011 - A formerly markdown powered article

@@ -20,6 +20,7 @@
 => ../category/bar.gmi bar
 
 ## Articles tagged with bar
+=> ../markdowns-back.gmi Markdown's Back!
 => ../second-article.gmi Second article
 => ../this-is-a-super-article.gmi This is a super article !
 => ../oh-yeah.gmi Oh yeah !
