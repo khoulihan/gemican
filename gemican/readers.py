@@ -351,43 +351,6 @@ class Readers(FileStampDataCacher):
             # find images with empty alt
             find_empty_alt(content, path)
 
-        # eventually filter the content with typogrify if asked so
-        if self.settings['TYPOGRIFY']:
-            from typogrify.filters import typogrify
-            import smartypants
-
-            typogrify_dashes = self.settings['TYPOGRIFY_DASHES']
-            if typogrify_dashes == 'oldschool':
-                smartypants.Attr.default = smartypants.Attr.set2
-            elif typogrify_dashes == 'oldschool_inverted':
-                smartypants.Attr.default = smartypants.Attr.set3
-            else:
-                smartypants.Attr.default = smartypants.Attr.set1
-
-            # Tell `smartypants` to also replace &quot; HTML entities with
-            # smart quotes. This is necessary because Docutils has already
-            # replaced double quotes with said entities by the time we run
-            # this filter.
-            smartypants.Attr.default |= smartypants.Attr.w
-
-            def typogrify_wrapper(text):
-                """Ensures ignore_tags feature is backward compatible"""
-                try:
-                    return typogrify(
-                        text,
-                        self.settings['TYPOGRIFY_IGNORE_TAGS'])
-                except TypeError:
-                    return typogrify(text)
-
-            if content:
-                content = typogrify_wrapper(content)
-
-            if 'title' in metadata:
-                metadata['title'] = typogrify_wrapper(metadata['title'])
-
-            if 'summary' in metadata:
-                metadata['summary'] = typogrify_wrapper(metadata['summary'])
-
         if context_signal:
             logger.debug(
                 'Signal %s.send(%s, <metadata>)',
