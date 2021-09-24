@@ -22,13 +22,8 @@ Gemican’s feature highlights include:
 * Import existing content from WordPress, Dotclear, or RSS feeds
 * Fast rebuild times due to content caching and selective output writing
 
-Check out `Pelican's documentation`_ for further information.
-
-
-How to get help, contribute, or provide feedback
-------------------------------------------------
-
-See our `contribution submission and feedback guidelines <CONTRIBUTING.rst>`_.
+Check out `Pelican's documentation`_ for further information. Gemican doesn't have its
+own documentation yet.
 
 
 Source code
