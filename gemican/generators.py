@@ -15,8 +15,8 @@ from gemican.cache import FileStampDataCacher
 from gemican.contents import Article, Page, Static
 from gemican.plugins import signals
 from gemican.readers import Readers
-from gemican.utils import (DateFormatter, copy, mkdir_p, order_content,
-                           posixize_path, process_translations)
+from gemican.utils import (DateFormatter, copy, MarkupStripper, mkdir_p,
+                           order_content, posixize_path, process_translations)
 
 
 logger = logging.getLogger(__name__)
@@ -71,6 +71,9 @@ class Generator:
 
         # provide utils.strftime as a jinja filter
         self.env.filters.update({'strftime': DateFormatter()})
+
+        # override `striptags` to understand gemtext
+        self.env.filters.update({'striptags': MarkupStripper()})
 
         # get custom Jinja filters from user settings
         custom_filters = self.settings['JINJA_FILTERS']

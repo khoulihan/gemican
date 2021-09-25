@@ -124,6 +124,25 @@ class DateFormatter:
         return formatted
 
 
+class MarkupStripper:
+    """A jinja filter implementing equivalent functionality to `striptags`."""
+
+    def _is_ignorable(self, line):
+        return any((
+            line.startswith('=>'),
+            line.startswith('```'),
+        ))
+
+    def __call__(self, value):
+        lines = value.splitlines()
+        out_lines = []
+        for line in lines:
+            if self._is_ignorable(line):
+                continue
+            out_lines.append(' '.join(line.lstrip('#>* ').split()))
+        return ' '.join(out_lines)
+
+
 class memoized:
     """Function decorator to cache return values.
 
