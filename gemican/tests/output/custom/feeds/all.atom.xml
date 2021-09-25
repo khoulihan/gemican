@@ -58,7 +58,15 @@ YEAH !
 
 ``` Longer Python code
 
-    def …</summary><content type="html">Or completely awesome. Depends the needs.
+    def run(self):
+        self.assert_has_content()
+        try:
+            lexer = get_lexer_by_name(self.arguments[0])
+        except ValueError:
+            # no lexer found - use the text one instead of an exception
+            lexer …
+```
+</summary><content type="html">Or completely awesome. Depends the needs.
 
 =&gt; gemini://blog.notmyidea.org/a-formerly-markdown-powered-article.gmi a root-relative link to another article
 =&gt; gemini://blog.notmyidea.org/a-formerly-markdown-powered-article.gmi a file-relative link to another article

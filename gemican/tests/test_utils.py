@@ -209,77 +209,80 @@ class TestUtils(LoggedTestCase):
         for value, expected in samples:
             self.assertEqual(utils.get_relative_path(value), expected)
 
-    def test_truncate_html_words(self):
+    def test_truncate_gemtext_words(self):
         # Plain text.
         self.assertEqual(
-            utils.truncate_html_words('short string', 20),
+            utils.truncate_gemtext_words('short string', 20),
             'short string')
         self.assertEqual(
-            utils.truncate_html_words('word ' * 100, 20),
+            utils.truncate_gemtext_words('word ' * 100, 20),
             'word ' * 20 + '…')
 
-        # Words enclosed or intervaled by HTML tags.
+        para = 'word ' * 10 + '\r\n'
         self.assertEqual(
-            utils.truncate_html_words('<p>' + 'word ' * 100 + '</p>', 20),
-            '<p>' + 'word ' * 20 + '…</p>')
-        self.assertEqual(
-            utils.truncate_html_words(
-                '<span\nstyle="\n…\n">' + 'word ' * 100 + '</span>', 20),
-            '<span\nstyle="\n…\n">' + 'word ' * 20 + '…</span>')
-        self.assertEqual(
-            utils.truncate_html_words('<br>' + 'word ' * 100, 20),
-            '<br>' + 'word ' * 20 + '…')
-        self.assertEqual(
-            utils.truncate_html_words('<!-- comment -->' + 'word ' * 100, 20),
-            '<!-- comment -->' + 'word ' * 20 + '…')
+            utils.truncate_gemtext_words(para * 10, 20),
+            para + 'word ' * 10 + '…')
 
         # Words with hypens and apostrophes.
         self.assertEqual(
-            utils.truncate_html_words("a-b " * 100, 20),
+            utils.truncate_gemtext_words("a-b " * 100, 20),
             "a-b " * 20 + '…')
         self.assertEqual(
-            utils.truncate_html_words("it's " * 100, 20),
+            utils.truncate_gemtext_words("it's " * 100, 20),
             "it's " * 20 + '…')
 
-        # Words with HTML entity references.
+        # Link lines are not split
+        link = '=> gemini://some.link And here is the link text\r\n'
         self.assertEqual(
-            utils.truncate_html_words("&eacute; " * 100, 20),
-            "&eacute; " * 20 + '…')
-        self.assertEqual(
-            utils.truncate_html_words("caf&eacute; " * 100, 20),
-            "caf&eacute; " * 20 + '…')
-        self.assertEqual(
-            utils.truncate_html_words("&egrave;lite " * 100, 20),
-            "&egrave;lite " * 20 + '…')
-        self.assertEqual(
-            utils.truncate_html_words("cafeti&eacute;re " * 100, 20),
-            "cafeti&eacute;re " * 20 + '…')
-        self.assertEqual(
-            utils.truncate_html_words("&int;dx " * 100, 20),
-            "&int;dx " * 20 + '…')
+            utils.truncate_gemtext_words(link * 100, 20),
+            link * 20 + ' …')
 
-        # Words with HTML character references inside and outside
-        # the ASCII range.
+        # Markup is ignored when counting words
+        header1 = '# One Two # #Three Four\r\n'
         self.assertEqual(
-            utils.truncate_html_words("&#xe9; " * 100, 20),
-            "&#xe9; " * 20 + '…')
-        self.assertEqual(
-            utils.truncate_html_words("&#x222b;dx " * 100, 20),
-            "&#x222b;dx " * 20 + '…')
+            utils.truncate_gemtext_words(header1 * 100, 20),
+            header1 * 4 + header1.rstrip() + ' …')
 
-        # Words with invalid or broken HTML references.
+        header2 = '## One Two ## ##Three Four\r\n'
         self.assertEqual(
-            utils.truncate_html_words('&invalid;', 20), '&invalid;')
+            utils.truncate_gemtext_words(header2 * 100, 20),
+            header2 * 4 + header2.rstrip() + ' …')
+
+        header3 = '### One Two ### ###Three Four\r\n'
         self.assertEqual(
-            utils.truncate_html_words('&#9999999999;', 20), '&#9999999999;')
+            utils.truncate_gemtext_words(header3 * 100, 20),
+            header3 * 4 + header3.rstrip() + ' …')
+
+        block = '> One Two > >Three Four\r\n'
         self.assertEqual(
-            utils.truncate_html_words('&#xfffffffff;', 20), '&#xfffffffff;')
+            utils.truncate_gemtext_words(block * 100, 20),
+            block * 4 + block.rstrip() + ' …')
+
+        block = '* One Two * *Three Four\r\n'
         self.assertEqual(
-            utils.truncate_html_words('&mdash text', 20), '&mdash text')
+            utils.truncate_gemtext_words(block * 100, 20),
+            block * 4 + block.rstrip() + ' …')
+
+        # Pre toggle lines are ignored when counting words, and also closed
+        # after the truncated text if they would otherwise be left open.
+        line = 'word ' * 5 + '\r\n'
         self.assertEqual(
-            utils.truncate_html_words('&#1234 text', 20), '&#1234 text')
+            utils.truncate_gemtext_words(
+                '``` Some pre descriptor\r\n' + line * 5 + '```\r\n',
+                20
+            ),
+            '``` Some pre descriptor\r\n'
+            + line * 3
+            + line.rstrip()
+            + ' …\r\n'
+            + '```\r\n'
+        )
+
+        # Blank lines should not interfere with the word counting
+        line = 'word ' * 5 + '\r\n\r\n'
         self.assertEqual(
-            utils.truncate_html_words('&#xabc text', 20), '&#xabc text')
+            utils.truncate_gemtext_words(line * 100, 20),
+            line * 3 + line.rstrip() + ' …')
 
     def test_process_translations(self):
         fr_articles = []

@@ -2,6 +2,6 @@
 {% block content %}
 ## Archives for {{ period | reverse | join(' ') }}
 {% for article in dates %}
-=> {{ SITEURL }}/{{ article.url }} {{ article.title|striptags }}
+=> {{ SITEURL }}/{{ article.url }} {{ article.title }}
 {% endfor %}
 {% endblock %}

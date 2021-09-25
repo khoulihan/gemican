@@ -4,7 +4,7 @@
 ## All articles
 {% endblock %}
 {% for article in articles_page.object_list %}
-=> {{ SITEURL }}/{{ article.url }} {{ article.title|striptags }}
+=> {{ SITEURL }}/{{ article.url }} {{ article.title }}
 {% endfor %}
 {% if articles_page.has_other_pages() %}
 

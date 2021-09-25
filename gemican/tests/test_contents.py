@@ -12,7 +12,7 @@ from gemican.plugins.signals import content_object_init
 from gemican.settings import DEFAULT_CONFIG
 from gemican.tests.support import (LoggedTestCase, get_context, get_settings,
                                    unittest)
-from gemican.utils import (path_to_url, posixize_path, truncate_html_words)
+from gemican.utils import (path_to_url, posixize_path, truncate_gemtext_words)
 
 
 # generate one paragraph, enclosed with <p>
@@ -108,7 +108,7 @@ class TestPage(TestBase):
         self.assertEqual(page.summary, TEST_CONTENT)
         settings['SUMMARY_MAX_LENGTH'] = 10
         page = Page(**page_kwargs)
-        self.assertEqual(page.summary, truncate_html_words(TEST_CONTENT, 10))
+        self.assertEqual(page.summary, truncate_gemtext_words(TEST_CONTENT, 10))
         settings['SUMMARY_MAX_LENGTH'] = 0
         page = Page(**page_kwargs)
         self.assertEqual(page.summary, '')
@@ -123,8 +123,10 @@ class TestPage(TestBase):
         settings['SUMMARY_END_SUFFIX'] = 'test_marker'
         settings['SUMMARY_MAX_LENGTH'] = 10
         page = Page(**page_kwargs)
-        self.assertEqual(page.summary, truncate_html_words(TEST_CONTENT, 10,
-                                                           'test_marker'))
+        self.assertEqual(
+            page.summary,
+            truncate_gemtext_words(TEST_CONTENT, 10, 'test_marker')
+        )
         self.assertIn('test_marker', page.summary)
 
     def test_summary_get_summary_warning(self):

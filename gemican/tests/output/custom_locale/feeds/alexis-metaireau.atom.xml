@@ -45,7 +45,19 @@ YEAH !
     formatter = self.options and VARIANTS[self.options.keys()[0]]
 ```
 
-### Testing …</summary><content type="html">Or completely awesome. Depends the needs.
+### Testing more sourcecode
+
+``` Longer Python code
+
+    def run(self):
+        self.assert_has_content()
+        try:
+            lexer = get_lexer_by_name(self.arguments[0])
+        except ValueError:
+            # no lexer found - use the text one instead of an exception
+            lexer …
+```
+</summary><content type="html">Or completely awesome. Depends the needs.
 
 =&gt; gemini://blog.notmyidea.org/posts/2011/avril/20/a-formerly-markdown-powered-article/ a root-relative link to another article
 =&gt; gemini://blog.notmyidea.org/posts/2011/avril/20/a-formerly-markdown-powered-article/ a file-relative link to another article

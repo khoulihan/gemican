@@ -13,7 +13,7 @@ from gemican.plugins import signals
 from gemican.settings import DEFAULT_CONFIG
 from gemican.utils import (deprecated_attribute, memoized, path_to_url,
                            posixize_path, sanitised_join, set_date_tzinfo,
-                           slugify, truncate_html_words, urljoin)
+                           slugify, truncate_gemtext_words, urljoin)
 
 # Import these so that they're avalaible when you import from gemican.contents.
 from gemican.urlwrappers import (Author, Category, Tag, URLWrapper)  # NOQA
@@ -405,9 +405,11 @@ class Content:
         if self.settings['SUMMARY_MAX_LENGTH'] is None:
             return self.content
 
-        return truncate_html_words(self.content,
-                                   self.settings['SUMMARY_MAX_LENGTH'],
-                                   self.settings['SUMMARY_END_SUFFIX'])
+        return truncate_gemtext_words(
+            self.content,
+            self.settings['SUMMARY_MAX_LENGTH'],
+            self.settings['SUMMARY_END_SUFFIX'],
+        )
 
     @property
     def summary(self):

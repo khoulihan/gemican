@@ -11,8 +11,6 @@ import urllib
 from collections.abc import Hashable
 from contextlib import contextmanager
 from functools import partial
-from html import entities
-from html.parser import HTMLParser
 from itertools import groupby
 from operator import attrgetter
 
@@ -406,184 +404,97 @@ def posixize_path(rel_path):
     return rel_path.replace(os.sep, '/')
 
 
-class _HTMLWordTruncator(HTMLParser):
+class _GemtextWordTruncator():
 
     _word_regex = re.compile(r"\w[\w'-]*", re.U)
     _word_prefix_regex = re.compile(r'\w', re.U)
-    _singlets = ('br', 'col', 'link', 'base', 'img', 'param', 'area',
-                 'hr', 'input')
 
-    class TruncationCompleted(Exception):
+    _PRE = '```'
 
-        def __init__(self, truncate_at):
-            super().__init__(truncate_at)
-            self.truncate_at = truncate_at
+    _MARKUP = (
+        '#',
+        '##',
+        '###',
+        '>',
+        '*',
+    )
 
     def __init__(self, max_words):
-        super().__init__(convert_charrefs=False)
+        super().__init__()
 
         self.max_words = max_words
         self.words_found = 0
-        self.open_tags = []
+        self.in_pre = False
         self.last_word_end = None
         self.truncate_at = None
 
-    def feed(self, *args, **kwargs):
-        try:
-            super().feed(*args, **kwargs)
-        except self.TruncationCompleted as exc:
-            self.truncate_at = exc.truncate_at
-        else:
-            self.truncate_at = None
+    def _is_link(self, line):
+        return line.startswith('=>')
 
-    def getoffset(self):
-        line_start = 0
-        lineno, line_offset = self.getpos()
-        for i in range(lineno - 1):
-            line_start = self.rawdata.index('\n', line_start) + 1
-        return line_start + line_offset
+    def _is_preformatted_toggle(self, line):
+        return line.startswith(self._PRE)
 
-    def add_word(self, word_end):
-        self.words_found += 1
-        self.last_word_end = None
-        if self.words_found == self.max_words:
-            raise self.TruncationCompleted(word_end)
+    def _process_text_line(self, line, truncate_at):
+        local_truncate_at = 0
+        for word in self._word_regex.finditer(line):
+            self.words_found += 1
+            local_truncate_at = word.end()
 
-    def add_last_word(self):
-        if self.last_word_end is not None:
-            self.add_word(self.last_word_end)
+            if self.words_found >= self.max_words:
+                return truncate_at + local_truncate_at
+        return truncate_at + len(line)
 
-    def handle_starttag(self, tag, attrs):
-        self.add_last_word()
-        if tag not in self._singlets:
-            self.open_tags.insert(0, tag)
+    def process(self, content):
+        if len(content) == 0:
+            return
 
-    def handle_endtag(self, tag):
-        self.add_last_word()
-        try:
-            i = self.open_tags.index(tag)
-        except ValueError:
-            pass
-        else:
-            # SGML: An end tag closes, back to the matching start tag,
-            # all unclosed intervening start tags with omitted end tags
-            del self.open_tags[:i + 1]
+        truncate_at = 0
+        lines = content.splitlines(keepends=True)
+        for line in lines:
 
-    def handle_data(self, data):
-        word_end = 0
-        offset = self.getoffset()
+            if not self.in_pre:
+                if self._is_link(line):
+                    # Link lines count as one word
+                    self.words_found += 1
+                    truncate_at += len(line)
+                elif self._is_preformatted_toggle(line):
+                    # Don't count pre toggle lines at all.
+                    truncate_at += len(line)
+                    self.in_pre = not self.in_pre
+                else:
+                    truncate_at = self._process_text_line(line, truncate_at)
+            else:
+                truncate_at = self._process_text_line(line, truncate_at)
 
-        while self.words_found < self.max_words:
-            match = self._word_regex.search(data, word_end)
-            if not match:
+            if self.words_found >= self.max_words:
+                self.truncate_at = truncate_at
                 break
 
-            if match.start(0) > 0:
-                self.add_last_word()
-
-            word_end = match.end(0)
-            self.last_word_end = offset + word_end
-
-        if word_end < len(data):
-            self.add_last_word()
-
-    def _handle_ref(self, name, char):
-        """
-        Called by handle_entityref() or handle_charref() when a ref like
-        `&mdash;`, `&#8212;`, or `&#x2014` is found.
-
-        The arguments for this method are:
-
-        - `name`: the HTML entity name (such as `mdash` or `#8212` or `#x2014`)
-        - `char`: the Unicode representation of the ref (such as `—`)
-
-        This method checks whether the entity is considered to be part of a
-        word or not and, if not, signals the end of a word.
-        """
-        # Compute the index of the character right after the ref.
-        #
-        # In a string like 'prefix&mdash;suffix', the end is the sum of:
-        #
-        # - `self.getoffset()` (the length of `prefix`)
-        # - `1` (the length of `&`)
-        # - `len(name)` (the length of `mdash`)
-        # - `1` (the length of `;`)
-        #
-        # Note that, in case of malformed HTML, the ';' character may
-        # not be present.
-
-        offset = self.getoffset()
-        ref_end = offset + len(name) + 1
-
-        try:
-            if self.rawdata[ref_end] == ';':
-                ref_end += 1
-        except IndexError:
-            # We are at the end of the string and there's no ';'
-            pass
-
-        if self.last_word_end is None:
-            if self._word_prefix_regex.match(char):
-                self.last_word_end = ref_end
-        else:
-            if self._word_regex.match(char):
-                self.last_word_end = ref_end
-            else:
-                self.add_last_word()
-
-    def handle_entityref(self, name):
-        """
-        Called when an entity ref like '&mdash;' is found
-
-        `name` is the entity ref without ampersand and semicolon (e.g. `mdash`)
-        """
-        try:
-            codepoint = entities.name2codepoint[name]
-            char = chr(codepoint)
-        except KeyError:
-            char = ''
-        self._handle_ref(name, char)
-
-    def handle_charref(self, name):
-        """
-        Called when a char ref like '&#8212;' or '&#x2014' is found
-
-        `name` is the char ref without ampersand and semicolon (e.g. `#8212` or
-        `#x2014`)
-        """
-        try:
-            if name.startswith('x'):
-                codepoint = int(name[1:], 16)
-            else:
-                codepoint = int(name)
-            char = chr(codepoint)
-        except (ValueError, OverflowError):
-            char = ''
-        self._handle_ref('#' + name, char)
+        return self.truncate_at
 
 
-def truncate_html_words(s, num, end_text='…'):
-    """Truncates HTML to a certain number of words.
+def truncate_gemtext_words(s, num, end_text='…'):
+    """Truncates Gemtext to a certain number of words.
 
-    (not counting tags and comments). Closes opened tags if they were correctly
-    closed in the given html. Takes an optional argument of what should be used
+    Takes an optional argument of what should be used
     to notify that the string has been truncated, defaulting to ellipsis (…).
 
-    Newlines in the HTML are preserved. (From the django framework).
+    Newlines in the Gemtext are preserved. (From the django framework).
     """
     length = int(num)
     if length <= 0:
         return ''
-    truncator = _HTMLWordTruncator(length)
-    truncator.feed(s)
+    truncator = _GemtextWordTruncator(length)
+    truncator.process(s)
     if truncator.truncate_at is None:
         return s
     out = s[:truncator.truncate_at]
     if end_text:
         out += ' ' + end_text
     # Close any tags still open
-    for tag in truncator.open_tags:
-        out += '</%s>' % tag
+    # This can only be a code block for Gemtext
+    if truncator.in_pre:
+        out += '\r\n```\r\n'
     # Return string
     return out
 

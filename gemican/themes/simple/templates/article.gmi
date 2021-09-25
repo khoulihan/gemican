@@ -1,6 +1,6 @@
 
 {% block title %}
-# {{ article.title|striptags }}
+# {{ article.title }}
 {% endblock %}
 {% block content %}
 Published: {{ article.locale_date }}

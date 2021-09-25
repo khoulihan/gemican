@@ -30,5 +30,17 @@ YEAH !
     formatter = self.options and VARIANTS[self.options.keys()[0]]
 ```
 
-### Testing …</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alexis Métaireau</dc:creator><pubDate>Fri, 15 Oct 2010 20:30:00 +0200</pubDate><guid isPermaLink="false">tag:blog.notmyidea.org,2010-10-15:/posts/2010/octobre/15/unbelievable/</guid><category>misc</category></item><item><title>The baz tag</title><link>gemini://blog.notmyidea.org/tag/baz.gmi</link><description>This article overrides the listening of the articles under the baz tag.
+### Testing more sourcecode
+
+``` Longer Python code
+
+    def run(self):
+        self.assert_has_content()
+        try:
+            lexer = get_lexer_by_name(self.arguments[0])
+        except ValueError:
+            # no lexer found - use the text one instead of an exception
+            lexer …
+```
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alexis Métaireau</dc:creator><pubDate>Fri, 15 Oct 2010 20:30:00 +0200</pubDate><guid isPermaLink="false">tag:blog.notmyidea.org,2010-10-15:/posts/2010/octobre/15/unbelievable/</guid><category>misc</category></item><item><title>The baz tag</title><link>gemini://blog.notmyidea.org/tag/baz.gmi</link><description>This article overrides the listening of the articles under the baz tag.
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alexis Métaireau</dc:creator><pubDate>Sun, 14 Mar 2010 00:00:00 +0100</pubDate><guid isPermaLink="false">tag:blog.notmyidea.org,2010-03-14:/tag/baz.gmi</guid><category>misc</category></item></channel></rss>
