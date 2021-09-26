@@ -23,7 +23,7 @@ entry_points = {
 }
 
 README = open('README.rst', encoding='utf-8').read()
-CHANGELOG = open('docs/content/changelog.md', encoding='utf-8').read()
+CHANGELOG = open('docs/content/pages/changelog.md', encoding='utf-8').read()
 
 description = '\n'.join([README, CHANGELOG])
 
