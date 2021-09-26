@@ -3,8 +3,7 @@
 .*.swo
 *.pyc
 .DS_Store
-docs/_build
-docs/fr/_build
+docs/output
 build
 dist
 tags

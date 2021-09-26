@@ -1,0 +1,14 @@
+# {{ article.title }}
+
+{{ article.content }}
+
+📅 {{article.locale_date}}
+
+
+{% include "partials/back_nav.gmi" %}
+
+
+=> {{ SITEURL }}/{{article.category.url}} 📁 {{article.category.name}}
+{% for tag in article.tags %}
+=> {{ SITEURL }}/{{tag.url}} #{{tag.name}}
+{% endfor %}

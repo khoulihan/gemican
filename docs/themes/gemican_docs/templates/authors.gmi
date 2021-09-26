@@ -1,0 +1,8 @@
+# Authors
+
+{% include "partials/back_nav.gmi" %}
+
+
+{% for author in authors %}
+=> {{ SITEURL }}/{{ author[0].url }} {{ author[0].name }} ({{ author[1]|length }} articles)
+{% endfor %}

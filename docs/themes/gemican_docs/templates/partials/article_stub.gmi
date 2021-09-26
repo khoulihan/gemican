@@ -1,0 +1,8 @@
+### {{ article.title }}
+=> {{ SITEURL }}/{{ article.url }} {{ article.date|strftime('%Y-%m-%d') }} - {{ article.title }}
+{% if article.summary %}
+{{ article.summary|striptags }}
+{% endif %}
+
+📁 {{article.category.name}}
+{% for tag in article.tags %} #{{tag.name}}{% if not loop.last %}, {% endif %}{% endfor %}

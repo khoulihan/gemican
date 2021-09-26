@@ -1,0 +1,8 @@
+# Tags
+
+{% include "partials/back_nav.gmi" %}
+
+
+{% for tag in tags %}
+=> {{ SITEURL }}/{{ tag[0].url }} #{{ tag[0].name }} ({{ tag[1]|length }} articles)
+{% endfor %}

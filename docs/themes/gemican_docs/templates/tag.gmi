@@ -1,0 +1,5 @@
+# #{{tag.name}}
+
+{% include "partials/back_nav.gmi" %}
+
+{% include "partials/loop.gmi" %}

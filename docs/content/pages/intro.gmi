@@ -1,0 +1,80 @@
+Title: Gemican Docs
+Date: 2021-09-25 22:38
+Slug: index
+Authors: Kevin Houlihan, Justin Mayer, Alexis Metaireau, contributors
+Summary: Capsule index
+URL: index.gmi
+save_as: index.gmi
+Template: capsule_intro
+Status: hidden
+
+# Gemican
+
+Gemican is a static Gemini capsule generator, written in Python.
+
+It is based on the static site generator, Pelican.
+
+Highlights include:
+
+* Write your content directly with your editor of choice in Gemtext or Markdown formats
+* Includes a simple CLI tool to (re)generate your site
+* Easy to interface with distributed version control systems and web hooks
+* Completely static output is easy to host anywhere
+
+=> gemini://gemini.circumlunar.space/docs/gemtext.gmi Gemtext
+=> https://daringfireball.net/projects/markdown/ Markdown
+
+Ready to get started? Check out the Quickstart guide.
+
+=> {filename}/pages/quickstart.md Quickstart
+
+## Features
+
+Gemican’s feature highlights include:
+
+* Articles (e.g., blog posts) and pages (e.g., "About", "Projects", "Contact")
+* Integration with external services
+* Site themes (created using Jinja2)
+* Publication of articles in multiple languages
+* Generation of Atom and RSS feeds
+* Import existing content from WordPress, Dotclear, or RSS feeds
+* Fast rebuild times thanks to content caching and selective output writing
+* Extensible via plugins
+
+## Why the name "Gemican"?
+
+"Gemican" is an anagram of *camegin*, which means nothing in any language.
+
+Only joking - Gemican is based on the Pelican static site generator, and took its name from that.
+
+=> https://getpelican.com/ Pelican
+
+## Source code
+
+You can access the source code at:
+
+=> https://github.com/khoulihan/gemican Gemican GitHub
+
+## How to get help, contribute, or provide feedback
+
+See our feedback and contribution submission guidelines.
+
+=> {filename}/pages/contribute.md Contribute
+
+## Documentation
+
+=> {filename}/pages/quickstart.md Quickstart
+=> {filename}/pages/install.md Install
+=> {filename}/pages/content.md Content
+=> {filename}/pages/publish.md Publish
+=> {filename}/pages/settings.md Settings
+=> {filename}/pages/themes.md Themes
+=> {filename}/pages/plugins.md Plugins
+=> {filename}/pages/gemican-themes.md gemican-themes
+=> {filename}/pages/importer.md Importer
+=> {filename}/pages/faq.md FAQ
+=> {filename}/pages/tips.md Tips
+=> {filename}/pages/contribute.md Contribute
+=> {filename}/pages/internals.md Internals
+=> {filename}/pages/report.md History
+=> {filename}/pages/changelog.md Changelog

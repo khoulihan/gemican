@@ -1,0 +1,33 @@
+{% if SITEASCII %}
+``` {{ SITENAME }} image
+{{ SITEASCII }}
+```
+{% endif %}
+
+# {{SITENAME}}
+{% if SITESUBTITLE %}
+### {{ SITESUBTITLE }}
+{% endif %}
+
+=> {{SITEURL}}/categories.gmi 📁 Categories
+=> {{SITEURL}}/tags.gmi Tags
+
+{% for title, link in MENUITEMS %}
+=> {{ link }} {{ title }}
+{% endfor %}
+{% if DISPLAY_PAGES_ON_MENU %}
+### Pages
+{% for p in pages %}
+=> {{ SITEURL }}/{{ p.url }} {% if p == page %}👉 {% endif %}{{ p.title }}
+{% endfor %}
+{% endif %}
+{% if DISPLAY_CATEGORIES_ON_MENU %}
+### Categories
+{% for cat, null in categories %}
+=> {{ SITEURL }}/{{ cat.url }} {% if cat == category %}👉 {% endif %}{{ cat }}
+{% endfor %}
+{% endif %}
+
+## All Posts
+
+{% include "partials/loop.gmi" %}
