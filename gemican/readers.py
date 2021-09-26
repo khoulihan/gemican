@@ -3,6 +3,7 @@ import logging
 import os
 import re
 from collections import OrderedDict
+from urllib.parse import unquote
 
 from gemican.cache import FileStampDataCacher
 from gemican.contents import Author, Category, Page, Tag
@@ -228,6 +229,11 @@ class GeminiReader(MarkdownMetaDataReader):
     file_extensions = ['gmi', 'gemini']
 
 
+def _markdown_link_func(link):
+    """Link func that undoes the url-encoding that md2gemini has done"""
+    return unquote(link)
+
+
 class MarkdownReader(MarkdownMetaDataReader):
     """Reader for Markdown files"""
 
@@ -237,6 +243,8 @@ class MarkdownReader(MarkdownMetaDataReader):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.markdown_settings = self.settings['MARKDOWN']
+        if 'link_func' not in self.markdown_settings:
+            self.markdown_settings['link_func'] = _markdown_link_func
 
     def read(self, source_path):
         """Parse content and metadata of markdown files"""
