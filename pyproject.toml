@@ -62,7 +62,7 @@ black = {version = "^19.10b0", allow-prereleases = true}
 md2gemini = "^1.8.1"
 
 [tool.poetry.extras]
-markdown = ["markdown"]
+markdown = ["md2gemini"]
 
 [tool.poetry.scripts]
 gemican = "gemican.__main__:main"
