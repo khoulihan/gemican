@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gemican"
-version = "0.1.0"
+version = "5.0.0"
 description = "Static gemini capsule generator supporting Markdown and reStructuredText"
 authors = ["Kevin Houlihan <kevin@crimsoncookie.com>"]
 license = "AGPLv3"
