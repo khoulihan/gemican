@@ -1,14 +1,14 @@
 [tool.poetry]
 name = "gemican"
-version = "5.0.0"
-description = "Static gemini capsule generator supporting Markdown and reStructuredText"
+version = "5.0.1"
+description = "Static gemini capsule generator supporting Markdown and Gemtext"
 authors = ["Kevin Houlihan <kevin@crimsoncookie.com>"]
 license = "AGPLv3"
-readme = "README.rst"
-keywords = ["static site generator", "static sites", "ssg"]
+readme = "README.md"
+keywords = ["static site generator", "static sites", "ssg", "gemini"]
 
 repository = "https://github.com/khoulihan/gemican"
-documentation = "https://docs.getpelican.com"
+documentation = "https://portal.mozz.us/gemini/gemini.hyperlinkyourheart.com/gemicandocs/"
 
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
@@ -18,7 +18,8 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP :: Dynamic Content :: Content Management System",
     "Topic :: Internet :: WWW/HTTP :: Site Management",
     "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Text Processing :: Markup :: GemText",
+    "Topic :: Text Processing :: Markup :: Markdown",
+    "Topic :: Text Processing :: Markup",
 ]
 
 [tool.poetry.urls]
@@ -75,7 +76,7 @@ gemican-themes = "gemican.tools.pelican_themes:main"
 project-name = "Gemican"
 git-username = "botpub"
 git-email = "botpub@autopub.rocks"
-changelog-file = "docs/changelog.rst"
+changelog-file = "docs/content/pages/changelog.md"
 changelog-header = "###############"
 version-header = "="
 version-strings = ["setup.py"]

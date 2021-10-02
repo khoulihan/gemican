@@ -6,11 +6,11 @@ from os.path import join, relpath
 from setuptools import find_packages, setup
 
 
-version = "5.0.0"
+version = "5.0.1"
 
-requires = ['feedgenerator >= 1.9', 'jinja2 >= 2.7', 'pygments',
+requires = ['feedgenerator >= 1.9', 'jinja2 >= 2.7', 'Twisted', 'pyOpenSSL',
             'docutils>=0.15', 'pytz >= 0a', 'blinker', 'unidecode',
-            'python-dateutil', 'rich']
+            'python-dateutil', 'rich', 'service-identity', 'python-magic']
 
 entry_points = {
     'console_scripts': [
@@ -22,7 +22,7 @@ entry_points = {
     ]
 }
 
-README = open('README.rst', encoding='utf-8').read()
+README = open('README.md', encoding='utf-8').read()
 CHANGELOG = open('docs/content/pages/changelog.md', encoding='utf-8').read()
 
 description = '\n'.join([README, CHANGELOG])
@@ -35,14 +35,14 @@ setup(
     author_email='kevin@crimsoncookie.com',
     description="Static Gemini capsule generator supporting GemText",
     project_urls={
-        'Documentation': 'https://docs.getpelican.com/',
+        'Documentation': 'https://portal.mozz.us/gemini/gemini.hyperlinkyourheart.com/gemicandocs/',  # NOQA
         'Source': 'https://github.com/khoulihan/gemican',
         'Tracker': 'https://github.com/khoulihan/gemican/issues',
     },
-    keywords='static web site generator SSG Markdown gemini',
+    keywords='static capsule generator SSG Markdown gemini',
     license='AGPLv3',
     long_description=description,
-    long_description_content_type='text/x-rst',
+    long_description_content_type='text/markdown',
     packages=find_packages(),
     include_package_data=True,  # includes all in MANIFEST.in if in package
     # NOTE : This will collect any files that happen to be in the themes
@@ -65,7 +65,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: Implementation :: CPython',
-        'Topic :: Internet :: WWW/HTTP',
+        'Topic :: Internet',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     test_suite='gemican.tests',

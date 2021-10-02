@@ -3,6 +3,16 @@ Date: 2021-09-25 22:38
 Authors: Kevin Houlihan, Justin Mayer, Alexis Metaireau, contributors
 Summary: Release history
 
+## 5.0.0 - 2021-10-02
+
+-   First Gemican release
+-   Switched output and templates to Gemtext
+-   Removed RST support
+-   Added Gemtext source file support
+-   Switched Markdown support to using md2gemini
+-   Replaced HTTP dev server with basic Gemini server
+-   Converted all docs to Markdown and updated for the changes
+
 ## 4.6.0 - 2021-03-23
 
 -   Add new URL pattern to `PAGINATION_PATTERNS` for the last page in
