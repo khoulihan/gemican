@@ -4,6 +4,7 @@
 *.pyc
 .DS_Store
 docs/output
+docs/publishconf.py
 build
 dist
 tags
